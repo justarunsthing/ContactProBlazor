@@ -6,3 +6,5 @@
 /ContactProBlazor/obj
 /ContactProBlazor.Client/obj
 /ContactProBlazor/ContactProBlazor.csproj.user
+/ContactProBlazor/bin/Debug/net10.0
+/ContactProBlazor.Client/bin/Debug/net10.0
