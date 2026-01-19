@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="ContactProBlazor.Client/ContactProBlazor.Client.csproj" />
+  <Project Path="ContactProBlazor/ContactProBlazor.csproj" />
+</Solution>
