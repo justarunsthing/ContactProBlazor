@@ -21,6 +21,10 @@
     font-size: 2rem;
 }
 
+.text-highlight {
+    color: #F9B487;
+}
+
 @media (min-width: 992px) {
     .title {
         font-family: var(--cf-title-font);
