@@ -73,5 +73,8 @@ namespace ContactProBlazor.Models
 
         // Creates FK relationship to AspNetUsers table
         public virtual ApplicationUser? AppUser { get; set; }
+
+        // Link to Category
+        public virtual ICollection<Category>? Categories { get; set; } = [];
     }
 }
