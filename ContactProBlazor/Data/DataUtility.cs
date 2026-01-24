@@ -158,7 +158,34 @@ namespace ContactProBlazor.Data
                         contact.Address2 = new Faker().Address.SecondaryAddress();
                     }
                 }
+
+                demoContacts.AddRange(newContacts);
             }
+
+            if (demoCategories.Count == 0)
+            {
+                demoCategories = [
+                    new Category { Name = "Family", AppUserId = demoUser.Id },
+                    new Category { Name = "Friends", AppUserId = demoUser.Id },
+                    new Category { Name = "Work", AppUserId = demoUser.Id },
+                    new Category { Name = "Clients", AppUserId = demoUser.Id },
+                    new Category { Name = "Gaming", AppUserId = demoUser.Id },
+                    new Category { Name = "Favorites", AppUserId = demoUser.Id }
+                ];
+
+                dbContext.Categories.AddRange(demoCategories);
+            }
+
+            foreach (var contact in demoContacts.Where(c => c.Categories?.Count == 0))
+            {
+                int numCategories = rnd.Next(1, 5);
+                var categories = demoCategories.OrderBy(c => Guid.NewGuid()).Take(numCategories);
+
+                contact.Categories = [..categories];
+                dbContext.Update(contact);
+            }
+
+            await dbContext.SaveChangesAsync();
         }
     }
 }
