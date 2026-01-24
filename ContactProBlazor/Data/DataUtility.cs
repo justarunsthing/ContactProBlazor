@@ -18,6 +18,8 @@ namespace ContactProBlazor.Data
             await dbContextService.Database.MigrateAsync();
             // Seed a demo user
             await SeedDemoUserAsync(userManager, config);
+            // Seed demo contacts & categories
+            await SeedDemoContactsAsync(userManager, dbContextService, config);
         }
 
         public static async Task SeedDemoUserAsync(UserManager<ApplicationUser> userManager, IConfiguration config)
