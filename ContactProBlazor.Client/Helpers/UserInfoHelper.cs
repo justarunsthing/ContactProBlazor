@@ -1,4 +1,5 @@
 ﻿using System.Security.Claims;
+using ContactProBlazor.Client.Models;
 using Microsoft.AspNetCore.Components.Authorization;
 
 namespace ContactProBlazor.Client.Helpers
