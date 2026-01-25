@@ -13,28 +13,9 @@ namespace ContactProBlazor.Client.Helpers
                 return null;
             }
 
-            AuthenticationState authState = await authStateTask;
-            ClaimsPrincipal user = authState.User;
+            var authState = await authStateTask;
 
-            try
-            {
-                var userId = user.FindFirst(ClaimTypes.NameIdentifier)!.Value;
-                var email = user.FindFirst(ClaimTypes.Email)!.Value;
-                var firstName = user.FindFirst("FirstName")!.Value;
-                var lastName = user.FindFirst("LastName")!.Value;
-
-                return new UserInfo
-                {
-                    UserId = userId,
-                    Email = email,
-                    FirstName = firstName,
-                    LastName = lastName
-                };
-            }
-            catch
-            {
-                return null;
-            }
+            return GetUserInfo(authState);
         }
 
         public static UserInfo? GetUserInfo(AuthenticationState authState)
