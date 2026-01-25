@@ -6,6 +6,7 @@ namespace ContactProBlazor.Client.Helpers
 {
     public static class UserInfoHelper
     {
+        // Call from web assembly
         public static async Task<UserInfo?> GetUserInfoAsync(Task<AuthenticationState>? authStateTask)
         {
             if (authStateTask is null)
@@ -18,6 +19,7 @@ namespace ContactProBlazor.Client.Helpers
             return GetUserInfo(authState);
         }
 
+        // Call from server side directly
         public static UserInfo? GetUserInfo(AuthenticationState authState)
         {
             var userId = authState.User.FindFirst(ClaimTypes.NameIdentifier)!.Value;
