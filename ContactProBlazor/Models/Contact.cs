@@ -1,4 +1,6 @@
-﻿using ContactProBlazor.Data;
+﻿using ContactProBlazor.Client.Models;
+using ContactProBlazor.Data;
+using ContactProBlazor.Helpers;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -76,5 +78,33 @@ namespace ContactProBlazor.Models
 
         // Link to Category
         public virtual ICollection<Category>? Categories { get; set; } = [];
+
+        public ContactDTO ToDTO()
+        {
+            var dto = new ContactDTO
+            {
+                Id = this.Id,
+                FirstName = this.FirstName,
+                LastName = this.LastName,
+                BirthDate = this.BirthDate,
+                Address1 = this.Address1,
+                Address2 = this.Address2,
+                City = this.City,
+                PostCode = this.PostCode,
+                Email = this.Email,
+                PhoneNumber = this.PhoneNumber,
+                Created = this.Created,
+                ProfileImageUrl = this.ImageId.HasValue ? $"/uploads/{this.ImageId}" : ImageHelper.DefaultProfilePictureUrl,
+            };
+
+            foreach (var category in Categories ?? [])
+            {
+                // Prevent circular reference
+                category.Contacts.Clear();
+                dto.Categories?.Add(category.ToDTO());
+            }
+
+            return dto;
+        }
     }
 }
