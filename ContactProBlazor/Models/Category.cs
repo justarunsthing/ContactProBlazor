@@ -1,4 +1,5 @@
-﻿using ContactProBlazor.Data;
+﻿using ContactProBlazor.Client.Models;
+using ContactProBlazor.Data;
 using System.ComponentModel.DataAnnotations;
 
 namespace ContactProBlazor.Models
@@ -15,5 +16,23 @@ namespace ContactProBlazor.Models
         public string? AppUserId { get; set; }
         public virtual ApplicationUser? AppUser { get; set; }
         public virtual ICollection<Contact>? Contacts { get; set; } = [];
+
+        public CategoryDTO ToDTO()
+        {
+            var dto = new CategoryDTO
+            {
+                Id = this.Id,
+                Name = this.Name
+            };
+
+            foreach (var contact in Contacts ?? [])
+            {
+                // Prevent circular reference
+                contact.Categories.Clear();
+                dto.Contacts?.Add(contact.ToDTO());
+            }
+
+            return dto;
+        }
     }
 }
