@@ -5,16 +5,16 @@ using Microsoft.EntityFrameworkCore;
 
 namespace ContactProBlazor.Services
 {
-    public class CategoryRepository : ICategoryRepository
+    public class CategoryRepository(IDbContextFactory<ApplicationDbContext> contextFactory) : ICategoryRepository
     {
-        public CategoryRepository(IDbContextFactory<ApplicationDbContext> contextFactory)
+        public async Task<Category> CreateCategoryAsync(Category category)
         {
-            
-        }
+            using ApplicationDbContext context = contextFactory.CreateDbContext();
+            context.Categories.Add(category);
 
-        public Task<Category> CreateCategoryAsync(Category category)
-        {
-            throw new NotImplementedException();
+            await context.SaveChangesAsync();
+
+            return category;
         }
     }
 }
