@@ -33,4 +33,9 @@
     private UserInfo? userInfo;
 
     private CategoryDTO newCategory = new CategoryDTO();
+
+    protected override async Task OnInitializedAsync()
+    {
+        userInfo = await UserInfoHelper.GetUserInfoAsync(authStateTask);
+    }
 }
