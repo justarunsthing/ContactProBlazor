@@ -2,10 +2,12 @@
 @attribute [Authorize]
 @rendermode InteractiveServer
 
+@inject ICategoryDTOService CategoryService
+
 <PageTitle>ContactPro | Categories</PageTitle>
 
 <div class="container">
-    <EditForm Model="newCategory">
+    <EditForm Model="newCategory" OnValidSubmit="HandleNewCategory">
         <DataAnnotationsValidator />
 
         <ul class="list-group my-3">
@@ -37,5 +39,10 @@
     protected override async Task OnInitializedAsync()
     {
         userInfo = await UserInfoHelper.GetUserInfoAsync(authStateTask);
+    }
+
+    private async Task HandleNewCategory()
+    {
+        
     }
 }
