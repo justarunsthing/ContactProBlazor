@@ -27,5 +27,10 @@
 </div>
 
 @code {
+    [CascadingParameter]
+    private Task<AuthenticationState>? authStateTask { get; set; }
+
+    private UserInfo? userInfo;
+
     private CategoryDTO newCategory = new CategoryDTO();
 }
