@@ -43,6 +43,6 @@
 
     private async Task HandleNewCategory()
     {
-        
+        await CategoryService.CreateCategoryAsync(newCategory, userInfo!.UserId);
     }
 }
