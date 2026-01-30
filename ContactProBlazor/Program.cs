@@ -1,6 +1,9 @@
+using ContactProBlazor.Client.Interfaces;
 using ContactProBlazor.Components;
 using ContactProBlazor.Components.Account;
 using ContactProBlazor.Data;
+using ContactProBlazor.Interfaces;
+using ContactProBlazor.Services;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -43,6 +46,12 @@ builder.Services.AddIdentityCore<ApplicationUser>(options =>
     .AddDefaultTokenProviders();
 
 builder.Services.AddSingleton<IEmailSender<ApplicationUser>, IdentityNoOpEmailSender>();
+
+// Repositories
+builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
+
+// DTO Services
+builder.Services.AddScoped<ICategoryDTOService, CategoryDTOService>();
 
 var app = builder.Build();
 
