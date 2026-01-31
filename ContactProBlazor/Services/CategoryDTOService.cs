@@ -7,6 +7,13 @@ namespace ContactProBlazor.Services
 {
     public class CategoryDTOService(ICategoryRepository repository) : ICategoryDTOService
     {
+        public async Task<List<CategoryDTO>> GetCategoriesAsync(string userId)
+        {
+            List<Category> categories = await repository.GetCategoriesAsync(userId);
+
+            return categories.Select(c => c.ToDTO()).ToList();
+        }
+
         public async Task<CategoryDTO> CreateCategoryAsync(CategoryDTO category, string userId)
         {
             Category newCategory = new()
