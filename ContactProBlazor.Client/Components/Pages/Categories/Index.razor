@@ -36,14 +36,20 @@
 
     private CategoryDTO newCategory = new CategoryDTO();
 
+    private IEnumerable<CategoryDTO> categories = [];
+
     protected override async Task OnInitializedAsync()
     {
         userInfo = await UserInfoHelper.GetUserInfoAsync(authStateTask);
+        categories = await CategoryService.GetCategoriesAsync(userInfo!.UserId);
+
     }
 
     private async Task HandleNewCategory()
     {
         await CategoryService.CreateCategoryAsync(newCategory, userInfo!.UserId);
+
         newCategory = new CategoryDTO();
+        categories = await CategoryService.GetCategoriesAsync(userInfo!.UserId);
     }
 }
