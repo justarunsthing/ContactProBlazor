@@ -47,4 +47,13 @@
 
     [Parameter, EditorRequired]
     public CategoryDTO? Category { get; set; }
+
+    private Status status = Status.Viewing;
+
+    private enum Status
+    {
+        Viewing,
+        Editing,
+        Deleting
+    }
 }
