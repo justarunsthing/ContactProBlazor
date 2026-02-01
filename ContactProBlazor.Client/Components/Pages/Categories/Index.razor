@@ -44,7 +44,6 @@
     {
         userInfo = await UserInfoHelper.GetUserInfoAsync(authStateTask);
         categories = await CategoryService.GetCategoriesAsync(userInfo!.UserId);
-
     }
 
     private async Task HandleNewCategory()
