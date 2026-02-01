@@ -49,7 +49,7 @@
                                 <i class="bi bi-floppy" aria-label="Save Changes"></i>
                                 Save
                             </button>
-                            <a role="button" class="btn btn-sm btn-danger">
+                            <a role="button" class="btn btn-sm btn-danger" @onclick="CancelEdit">
                                 <i class="bi bi-x" aria-label="Cancel Changes"></i>
                                 Cancel
                             </a>
@@ -82,6 +82,11 @@
     public CategoryDTO? Category { get; set; }
 
     private Status status = Status.Viewing;
+
+    private void CancelEdit()
+    {
+        status = Status.Viewing;
+    }
 
     private enum Status
     {
