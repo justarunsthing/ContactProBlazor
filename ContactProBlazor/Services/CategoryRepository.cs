@@ -28,5 +28,17 @@ namespace ContactProBlazor.Services
 
             return category;
         }
+
+        public async Task UpdateCategoryAsync(Category category, string userId)
+        {
+            using ApplicationDbContext context = contextFactory.CreateDbContext();
+
+            if (await context.Categories.AnyAsync(c => c.Id == category.Id && c.AppUserId == userId))
+            {
+                context.Categories.Update(category);
+
+                await context.SaveChangesAsync();
+            }
+        }
     }
 }

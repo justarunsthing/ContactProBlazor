@@ -6,5 +6,6 @@ namespace ContactProBlazor.Interfaces
     {
         Task<List<Category>> GetCategoriesAsync(string userId);
         Task<Category> CreateCategoryAsync(Category category);
+        Task UpdateCategoryAsync(Category category, string userId);
     }
 }
