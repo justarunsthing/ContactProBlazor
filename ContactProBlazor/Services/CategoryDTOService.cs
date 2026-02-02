@@ -33,5 +33,20 @@ namespace ContactProBlazor.Services
 
             return newCategory.ToDTO();
         }
+
+        public async Task UpdateCategoryAsync(CategoryDTO category, string userId)
+        {
+            Category? categoryToUpdate = await repository.GetCategoryAsync(category.Id, userId);
+
+            if (categoryToUpdate != null)
+            {
+                categoryToUpdate.Name = category.Name;
+
+                // Prevents duplicate db records
+                categoryToUpdate.Contacts.Clear();
+
+                await repository.UpdateCategoryAsync(categoryToUpdate, userId);
+            }
+        }
     }
 }
