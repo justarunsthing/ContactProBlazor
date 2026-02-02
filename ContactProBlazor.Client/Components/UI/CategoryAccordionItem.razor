@@ -82,9 +82,15 @@
     public CategoryDTO? Category { get; set; }
 
     private Status status = Status.Viewing;
+    private string originalName = string.Empty;
 
     private void CancelEdit()
     {
+        if (Category != null && originalName != string.Empty)
+        {
+            Category.Name = originalName;
+        }
+
         status = Status.Viewing;
     }
 
