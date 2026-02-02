@@ -7,6 +7,17 @@ namespace ContactProBlazor.Services
 {
     public class CategoryRepository(IDbContextFactory<ApplicationDbContext> contextFactory) : ICategoryRepository
     {
+        public async Task<Category?> GetCategoryAsync(int id, string userId)
+        {
+            using ApplicationDbContext context = contextFactory.CreateDbContext();
+
+            Category? category = await context.Categories
+                                             .Include(c => c.Contacts)
+                                             .FirstOrDefaultAsync(c => c.Id == id && c.AppUserId == userId);
+
+            return category;
+        }
+
         public async Task<List<Category>> GetCategoriesAsync(string userId)
         {
             using ApplicationDbContext context = contextFactory.CreateDbContext();
