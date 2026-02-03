@@ -33,7 +33,7 @@
             }
             else if (status == Status.Editing)
             {
-                <EditForm Model="Category" class="d-lg-flex gap-3 p-3 align-items-center">
+                <EditForm Model="Category" class="d-lg-flex gap-3 p-3 align-items-center" OnValidSubmit="HandleEditAsync">
                     <div class="flex-grow-1 hstack gap-2 align-items-center" role="button" data-bs-toggle="collapse" data-bs-target="#collapse-@Category.Id" aria-expanded="false">
                         <span class="badge bg-secondary rounded-pill small">
                             @Category.Contacts!.Count
@@ -80,6 +80,24 @@
 
     [Parameter, EditorRequired]
     public CategoryDTO? Category { get; set; }
+
+    [Parameter, EditorRequired]
+    public EventCallback<CategoryDTO> OnCategoryChange { get; set; }
+
+    protected override void OnInitialized()
+    {
+        if (Category != null)
+        {
+            originalName = Category.Name!;
+        }
+    }
+
+    public async Task HandleEditAsync()
+    {
+        await OnCategoryChange.InvokeAsync(Category);
+
+        status = Status.Viewing;
+    }
 
     private Status status = Status.Viewing;
     private string originalName = string.Empty;
