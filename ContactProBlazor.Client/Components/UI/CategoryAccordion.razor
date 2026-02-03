@@ -1,13 +1,17 @@
 ﻿<div id="@accordionId" class="accordion">
     @foreach (var category in Categories)
     {
-        <CategoryAccordionItem @key="category.Id" Category="category" ParentId="@accordionId" />
+        <CategoryAccordionItem @key="category.Id" Category="category" ParentId="@accordionId" OnCategoryChange="OnCategoryChange" />
     }
 </div>
 
 @code {
     [Parameter, EditorRequired]
     public IEnumerable<CategoryDTO> Categories { get; set; } = [];
+
+    // Type sent during callback is CategoryDTO
+    [Parameter, EditorRequired]
+    public EventCallback<CategoryDTO> OnCategoryChange { get; set; }
 
     private string accordionId = Guid.NewGuid().ToString();
 }
