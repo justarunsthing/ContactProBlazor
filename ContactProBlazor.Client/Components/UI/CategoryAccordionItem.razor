@@ -105,7 +105,10 @@
     public CategoryDTO? Category { get; set; }
 
     [Parameter, EditorRequired]
-    public EventCallback<CategoryDTO> OnCategoryChange { get; set; }
+    public EventCallback<CategoryDTO> OnCategoryChange { get; set; } // Pass CategoryDTO back
+
+    [Parameter, EditorRequired]
+    public EventCallback<int> OnDelete { get; set; } // Pass Category id back
 
     protected override void OnInitialized()
     {
@@ -124,7 +127,12 @@
 
     public async Task HandleDelete()
     {
-        
+        if (Category != null)
+        {
+            await OnDelete.InvokeAsync(Category.Id);
+        }
+
+        status = Status.Viewing;
     }
 
     private Status status = Status.Viewing;
