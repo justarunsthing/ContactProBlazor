@@ -1,7 +1,7 @@
 ﻿<div id="@accordionId" class="accordion">
     @foreach (var category in Categories)
     {
-        <CategoryAccordionItem @key="category.Id" Category="category" ParentId="@accordionId" OnCategoryChange="OnCategoryChange" />
+        <CategoryAccordionItem @key="category.Id" Category="category" ParentId="@accordionId" OnChange="OnChange" />
     }
 </div>
 
@@ -11,7 +11,7 @@
 
     // Type sent during callback is CategoryDTO
     [Parameter, EditorRequired]
-    public EventCallback<CategoryDTO> OnCategoryChange { get; set; }
+    public EventCallback<CategoryDTO> OnChange { get; set; }
 
     private string accordionId = Guid.NewGuid().ToString();
 }
