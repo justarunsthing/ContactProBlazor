@@ -51,5 +51,18 @@ namespace ContactProBlazor.Services
                 await context.SaveChangesAsync();
             }
         }
+
+        public async Task DeleteCategoryAsync(int id, string userId)
+        {
+            using ApplicationDbContext context = contextFactory.CreateDbContext();
+
+            Category? category = context.Categories.FirstOrDefault(c => c.Id ==  id && c.AppUserId == userId);
+
+            if (category != null)
+            {
+                context.Categories.Remove(category);
+                await context.SaveChangesAsync();
+            }
+        }
     }
 }
