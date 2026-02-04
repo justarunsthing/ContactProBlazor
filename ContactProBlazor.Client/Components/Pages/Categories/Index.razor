@@ -27,7 +27,7 @@
         </ul>
     </EditForm>
 
-    <CategoryAccordion Categories="categories" OnChange="UpdateCategory" />
+    <CategoryAccordion Categories="categories" OnChange="UpdateCategory" OnDelete="DeleteCategory" />
 </div>
 
 @code {
@@ -57,5 +57,11 @@
     private async Task UpdateCategory(CategoryDTO category)
     {
         await CategoryService.UpdateCategoryAsync(category, userInfo!.UserId);
+    }
+
+    private async Task DeleteCategory(int id)
+    {
+        await CategoryService.DeleteCategoryAsync(id, userInfo!.UserId);
+        categories = await CategoryService.GetCategoriesAsync(userInfo!.UserId);
     }
 }
