@@ -48,5 +48,10 @@ namespace ContactProBlazor.Services
                 await repository.UpdateCategoryAsync(categoryToUpdate, userId);
             }
         }
+
+        public async Task DeleteCategoryAsync(int id, string userId)
+        {
+            await repository.DeleteCategoryAsync(id, userId);
+        }
     }
 }
