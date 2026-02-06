@@ -46,5 +46,22 @@ namespace ContactProBlazor.Controllers
                 return Problem();
             }
         }
+
+        [HttpPost]
+        public async Task<ActionResult<CategoryDTO>> CreateCategoryAsync(CategoryDTO categoryDTO)
+        {
+            try
+            {
+                CategoryDTO createdCategory = await categoryDTOService.CreateCategoryAsync(categoryDTO, _userId);
+
+                // Creates url to the GetCategory endpoint
+                return CreatedAtAction(nameof(GetCategoryAsync), new { id = createdCategory.Id }, createdCategory);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+                return Problem();
+            }
+        }
     }
 }
