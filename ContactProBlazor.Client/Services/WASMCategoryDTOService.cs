@@ -16,9 +16,14 @@ namespace ContactProBlazor.Client.Services
             return await http.GetFromJsonAsync<List<CategoryDTO>>("api/categories") ?? [];
         }
 
-        public Task<CategoryDTO> CreateCategoryAsync(CategoryDTO category, string userId)
+        public async Task<CategoryDTO> CreateCategoryAsync(CategoryDTO category, string userId)
         {
-            throw new NotImplementedException();
+            HttpResponseMessage response = await http.PostAsJsonAsync("api/categories", category);
+            response.EnsureSuccessStatusCode();
+
+            CategoryDTO? createdCategory = await response.Content.ReadFromJsonAsync<CategoryDTO>();
+
+            return createdCategory ?? throw new HttpRequestException("Invalid JSON response from server");
         }
 
         public Task UpdateCategoryAsync(CategoryDTO category, string userId)
