@@ -14,7 +14,7 @@ namespace ContactProBlazor.Controllers
     public class CategoriesController(ICategoryDTOService categoryDTOService, UserManager<ApplicationUser> userManager) : ControllerBase
     {
         // Authorize means userId will never be null
-        // Is an expression bodied memner as it needs to be evaluated everytime this controller is accessed
+        // Is an expression bodied member as it needs to be evaluated everytime this controller is accessed
         private string _userId => userManager.GetUserId(User)!;
 
         [HttpGet("{id}")]
