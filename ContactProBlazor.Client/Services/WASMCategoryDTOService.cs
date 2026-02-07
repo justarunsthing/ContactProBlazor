@@ -26,9 +26,10 @@ namespace ContactProBlazor.Client.Services
             return createdCategory ?? throw new HttpRequestException("Invalid JSON response from server");
         }
 
-        public Task UpdateCategoryAsync(CategoryDTO category, string userId)
+        public async Task UpdateCategoryAsync(CategoryDTO category, string userId)
         {
-            throw new NotImplementedException();
+            HttpResponseMessage response = await http.PutAsJsonAsync($"api/categories/{category.Id}", category); // [FromRoute] parameter, category = [FromBody]
+            response.EnsureSuccessStatusCode();
         }
 
         public Task DeleteCategoryAsync(int id, string userId)
