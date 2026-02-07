@@ -63,5 +63,26 @@ namespace ContactProBlazor.Controllers
                 return Problem();
             }
         }
+
+        [HttpPut("{id:int}")]
+        public async Task<ActionResult> UpdateCategoryAsync([FromRoute] int id, [FromBody] CategoryDTO categoryDTO)
+        {
+            if (id != categoryDTO.Id)
+            {
+                return BadRequest();
+            }
+
+            try
+            {
+                await categoryDTOService.UpdateCategoryAsync(categoryDTO, _userId);
+
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+                return Problem();
+            }
+        }
     }
 }
