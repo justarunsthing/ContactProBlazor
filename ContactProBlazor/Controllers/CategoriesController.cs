@@ -18,7 +18,7 @@ namespace ContactProBlazor.Controllers
         private string _userId => userManager.GetUserId(User)!;
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<CategoryDTO>> GetCategoryAsync(int id)
+        public async Task<ActionResult<CategoryDTO>> GetCategory(int id)
         {
             try
             {
@@ -55,7 +55,7 @@ namespace ContactProBlazor.Controllers
                 CategoryDTO createdCategory = await categoryDTOService.CreateCategoryAsync(categoryDTO, _userId);
 
                 // Creates url to the GetCategory endpoint
-                return CreatedAtAction(nameof(GetCategoryAsync), new { id = createdCategory.Id }, createdCategory);
+                return CreatedAtAction(nameof(GetCategory), new { id = createdCategory.Id }, createdCategory);
             }
             catch (Exception ex)
             {
