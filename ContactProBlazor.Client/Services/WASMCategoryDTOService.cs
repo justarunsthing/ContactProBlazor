@@ -32,9 +32,10 @@ namespace ContactProBlazor.Client.Services
             response.EnsureSuccessStatusCode();
         }
 
-        public Task DeleteCategoryAsync(int id, string userId)
+        public async Task DeleteCategoryAsync(int id, string userId)
         {
-            throw new NotImplementedException();
+            HttpResponseMessage response = await http.DeleteAsync($"api/categories/{id}"); // [FromRoute] parameter
+            response.EnsureSuccessStatusCode();
         }
     }
 }
