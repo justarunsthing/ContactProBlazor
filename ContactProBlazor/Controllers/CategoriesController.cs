@@ -84,5 +84,21 @@ namespace ContactProBlazor.Controllers
                 return Problem();
             }
         }
+
+        [HttpDelete("{id:int}")]
+        public async Task<ActionResult> DeleteCategoryAsync([FromRoute] int id)
+        {
+            try
+            {
+                await categoryDTOService.DeleteCategoryAsync(id, _userId);
+
+                return NoContent();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+                return Problem();
+            }
+        }
     }
 }
