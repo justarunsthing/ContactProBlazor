@@ -1,0 +1,24 @@
+﻿@if (Contact != null)
+{
+    <EditForm Model="Contact">
+
+    </EditForm>
+}
+
+@code {
+    [Parameter, EditorRequired]
+    public ContactDTO? Contact { get; set; }
+
+    [Parameter, EditorRequired]
+    public EventCallback<ContactDTO> OnSubmit { get; set; }
+
+    [CascadingParameter]
+    private Task<AuthenticationState>? AuthStateTask { get; set; }
+
+    private UserInfo? userInfo;
+
+    private async Task HandleSubmit()
+    {
+        await OnSubmit.InvokeAsync(Contact);
+    }
+}
