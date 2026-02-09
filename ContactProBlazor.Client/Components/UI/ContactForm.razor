@@ -1,7 +1,79 @@
 ﻿@if (Contact != null)
 {
-    <EditForm Model="Contact">
+    <EditForm Model="Contact" OnValidSubmit="HandleSubmit">
+        <DataAnnotationsValidator />
 
+        <div class="row g-3 p-2">
+            <div class="col-12 col-lg-4">
+                <div>
+                    <img id="contact-image" src="" />
+                </div>
+                <div>
+                    <InputFile class="form-control mt-2" accept=".png,.jpg,.jpeg,.gif,.svg" />
+                    <span class="text-danger"></span>
+                </div>
+            </div>
+            <div class="col-12 col-lg-8">
+                <div class="row">
+                    <div class="col-12 col-lg-6 mt-2">
+                        <label for="Contact.FirstName" class="form-label">
+                            First Name
+                        </label>
+                        <InputText class="form-control" @bind-Value="Contact.FirstName" DisplayName="First Name" />
+                        <ValidationMessage For="() => Contact.FirstName" />
+                    </div>
+                    <div class="col-12 col-lg-6 mt-2">
+                        <label for="Contact.LastName" class="form-label">
+                            Last Name
+                        </label>
+                        <InputText class="form-control" @bind-Value="Contact.LastName" DisplayName="Last Name" />
+                        <ValidationMessage For="() => Contact.LastName" />
+                    </div>
+                    <div class="col-12 col-lg-6 mt-2">
+                        <label for="Contact.Email" class="form-label">
+                            Email
+                        </label>
+                        <InputText class="form-control" @bind-Value="Contact.Email" DisplayName="Email" />
+                        <ValidationMessage For="() => Contact.Email" />
+                    </div>
+                    <div class="col-12 col-lg-6 mt-2">
+                        <label for="Contact.PhoneNumber" class="form-label">
+                            Phone Number
+                        </label>
+                        <InputText class="form-control" @bind-Value="Contact.PhoneNumber" DisplayName="Phone Number" />
+                        <ValidationMessage For="() => Contact.PhoneNumber" />
+                    </div>
+                    <div class="col-12 mt-2">
+                        <label for="Contact.Address1" class="form-label">
+                            Address 1
+                        </label>
+                        <InputText class="form-control" @bind-Value="Contact.Address1" DisplayName="Address 1" />
+                        <ValidationMessage For="() => Contact.Address1" />
+                    </div>
+                    <div class="col-12 mt-2">
+                        <label for="Contact.Address2" class="form-label">
+                            Address 2
+                        </label>
+                        <InputText class="form-control" @bind-Value="Contact.Address2" DisplayName="Address 2" />
+                        <ValidationMessage For="() => Contact.Address2" />
+                    </div>
+                    <div class="col-12 col-lg-6 mt-2">
+                        <label for="Contact.City" class="form-label">
+                            City
+                        </label>
+                        <InputText class="form-control" @bind-Value="Contact.City" DisplayName="City" />
+                        <ValidationMessage For="() => Contact.City" />
+                    </div>
+                    <div class="col-12 col-lg-6 mt-2">
+                        <label for="Contact.PostCode" class="form-label">
+                            Postcode
+                        </label>
+                        <InputText class="form-control" @bind-Value="Contact.PostCode" DisplayName="Postcode" />
+                        <ValidationMessage For="() => Contact.PostCode" />
+                    </div>
+                </div>
+            </div>
+        </div>
     </EditForm>
 }
 
