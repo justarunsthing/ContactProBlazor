@@ -73,6 +73,19 @@
                         <InputText class="form-control" @bind-Value="Contact.PostCode" DisplayName="Postcode" />
                         <ValidationMessage For="() => Contact.PostCode" />
                     </div>
+                    <div class="col-12 col-lg-6 mt-2">
+                        <label for="" class="form-label">
+                            Categories
+                        </label>
+                        <InputSelect @bind-Value="selectedCategoryIds" class="form-control">
+                            @foreach (CategoryDTO category in categories)
+                            {
+                                <option value="@category.Id">
+                                    @category.Name
+                                </option>
+                            }
+                        </InputSelect>
+                    </div>
                 </div>
             </div>
         </div>
