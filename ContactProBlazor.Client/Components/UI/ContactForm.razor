@@ -1,4 +1,6 @@
-﻿@if (Contact != null)
+﻿@inject ICategoryDTOService CategoryDTOService
+
+@if (Contact != null)
 {
     <EditForm Model="Contact" OnValidSubmit="HandleSubmit">
         <DataAnnotationsValidator />
@@ -88,6 +90,27 @@
     private Task<AuthenticationState>? AuthStateTask { get; set; }
 
     private UserInfo? userInfo;
+
+    private IEnumerable<CategoryDTO> categories = [];
+
+    private int[] selectedCategoryIds = [];
+
+    protected override async Task OnInitializedAsync()
+    {
+        Contact ??= new ContactDTO();
+
+        selectedCategoryIds = Contact.Categories?.Select(c => c.Id).ToArray() ?? [];
+
+        try
+        {
+            userInfo = await UserInfoHelper.GetUserInfoAsync(AuthStateTask);
+            categories = await CategoryDTOService.GetCategoriesAsync(userInfo!.UserId);
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex);
+        }
+    }
 
     private async Task HandleSubmit()
     {
