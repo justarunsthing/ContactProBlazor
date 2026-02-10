@@ -86,6 +86,21 @@
                             }
                         </InputSelect>
                     </div>
+                    <div class="col-12 col-lg-6 mt-2">
+                        <label for="Contact.BirthDate" class="form-label">
+                            Birthday
+                        </label>
+                        <InputDate class="form-control" @bind-Value="Contact.BirthDate" DisplayName="Birthday" />
+                        <ValidationMessage For="() => Contact.BirthDate" />
+                    </div>
+                    <div class="col-12 d-flex justify-content-end justify-content-stretch gap-3 mt-2">
+                        <a href="/contacts" class="btn btn-outline-secondary rounded-pill">
+                            Cancel
+                        </a>
+                        <button type="submit" class="btn btn-primary rounded-pill">
+                            Save
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
