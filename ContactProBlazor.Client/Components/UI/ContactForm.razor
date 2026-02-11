@@ -123,6 +123,10 @@
 
     private int[] selectedCategoryIds = [];
 
+    private string? imageError;
+
+    private IBrowserFile? selectedImage;
+
     protected override async Task OnInitializedAsync()
     {
         Contact ??= new ContactDTO();
@@ -143,5 +147,33 @@
     private async Task HandleSubmit()
     {
         await OnSubmit.InvokeAsync(Contact);
+    }
+
+    private async Task OnImageChange(InputFileChangeEventArgs changeEvent)
+    {
+        imageError = null;
+
+        if (changeEvent.File == null)
+        {
+            selectedImage = null;
+            Contact!.ProfileImageUrl = BrowserFileHelper.DefaultContactImage;
+        }
+        else if (changeEvent.File.Size > BrowserFileHelper.MaxFileSize)
+        {
+            imageError = "Images must be less than 5MB";
+        }
+        else
+        {
+            try
+            {
+                Contact!.ProfileImageUrl = await BrowserFileHelper.GetImageDataUrl(changeEvent.File);
+                selectedImage = changeEvent.File;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+                imageError = "Could not read the selected image. Please select a different image.";
+            }
+        }
     }
 }
