@@ -7,9 +7,14 @@ namespace ContactProBlazor.Services
 {
     public class ContactRepository(IDbContextFactory<ApplicationDbContext> contextFactory) : IContactRepository
     {
-        public Task<Contact> CreateContactAsync(Contact contact)
+        public async Task<Contact> CreateContactAsync(Contact contact)
         {
-            throw new NotImplementedException();
+            using ApplicationDbContext context = contextFactory.CreateDbContext();
+            context.Contacts.Add(contact);
+
+            await context.SaveChangesAsync();
+
+            return contact;
         }
     }
 }
