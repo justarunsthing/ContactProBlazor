@@ -1,4 +1,5 @@
 ﻿using ContactProBlazor.Models;
+using System.Text.RegularExpressions;
 
 namespace ContactProBlazor.Helpers
 {
@@ -25,6 +26,36 @@ namespace ContactProBlazor.Helpers
             };
 
             return imageUpload;
+        }
+
+        public static ImageUpload GetImageUploadFromUrl(string dataUrl)
+        {
+            // Get segments out of the data URL
+            // Example: data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAoAAAAHgCAYAAACp8...
+            // Matched strings are shoved into <type> & <data> key-value pairs
+            GroupCollection matchGroups  = Regex.Match(dataUrl, @"data:(?<type>.+?);base64,(?<data>.+)").Groups;
+
+            if (matchGroups.ContainsKey("type") && matchGroups.ContainsKey("data"))
+            {
+                // Image type
+                string contentType = matchGroups["type"].Value;
+                // Image data
+                byte[] data = Convert.FromBase64String(matchGroups["data"].Value);
+
+                if (data.Length <= 5 * 1024 * 1024)
+                {
+                    ImageUpload upload = new ImageUpload()
+                    {
+                        Id = Guid.NewGuid(),
+                        Data = data,
+                        Type = contentType
+                    };
+
+                    return upload;
+                }
+            }
+
+            throw new IOException("Data URL was either invalid or too large!");
         }
     }
 }
