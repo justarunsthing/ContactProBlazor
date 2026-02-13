@@ -1,4 +1,5 @@
 ﻿using ContactProBlazor.Models;
+using ContactProBlazor.Helpers;
 using ContactProBlazor.Interfaces;
 using ContactProBlazor.Client.Models;
 using ContactProBlazor.Client.Interfaces;
@@ -23,6 +24,12 @@ namespace ContactProBlazor.Services
                 PhoneNumber = dto.PhoneNumber,
                 Created = DateTime.UtcNow
             };
+
+            // Save image, convert URL to the ImageUpload type
+            if (dto.ProfileImageUrl?.StartsWith("data:") == true)
+            {
+                newContact.Image = ImageHelper.GetImageUploadFromUrl(dto.ProfileImageUrl);
+            }
 
             newContact = await repository.CreateContactAsync(newContact);
 
