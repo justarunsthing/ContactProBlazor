@@ -38,7 +38,8 @@ namespace ContactProBlazor.Services
 
             await repository.AddCategoriesToContactAsync(newContact.Id, userId, categoryIds);
 
-            // Requery to get the updated contact
+            // Requery to get the updated contact, override
+            newContact = (await repository.GetContactByIdAsync(newContact.Id, userId))!;
 
             return newContact.ToDTO();
         }
