@@ -33,6 +33,13 @@ namespace ContactProBlazor.Services
 
             newContact = await repository.CreateContactAsync(newContact);
 
+            // Add categories to the contact
+            List<int> categoryIds = dto.Categories?.Select(c => c.Id).ToList() ?? [];
+
+            await repository.AddCategoriesToContactAsync(newContact.Id, userId, categoryIds);
+
+            // Requery to get the updated contact
+
             return newContact.ToDTO();
         }
     }
