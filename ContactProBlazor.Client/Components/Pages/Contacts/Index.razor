@@ -48,7 +48,30 @@
             </div>
         </div>
         <div class="col-12 col-lg-8">
-
+            <div class="row row-cols-1 row-cols-sm-2 row-cols-md-1">
+                @if (contacts != null && contacts.Count() > 0)
+                {
+                    foreach (ContactDTO contact in contacts.OrderBy(c => c.LastName).ThenBy(c => c.FirstName))
+                    {
+                        <div class="col">
+                            @contact.FirstName @contact.LastName
+                        </div>
+                    }
+                }
+                else
+                {
+                    <div class="text-center">
+                        <h4>
+                            No contacts found!
+                        </h4>
+                        <p>
+                            <a href="/contacts/create" class="btn btn-primary rounded-pill">
+                                Create your first contact
+                            </a>
+                        </p>
+                    </div>
+                }
+            </div>
         </div>
     </div>
 </div>
