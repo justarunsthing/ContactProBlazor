@@ -17,6 +17,29 @@
             </a>
         </div>
     </div>
+    <div class="row gap-3">
+        <div class="col-12 col-lg-4">
+            <div class="mb-3">
+                <form>
+                    <div class="input-group">
+                        <InputText class="form-group" type="search" placeholder="Search Contacts..." />
+                        <input type="submit" class="btn btn-primary" value="search" />
+                    </div>
+                </form>
+                <div class="mt-5">
+                    <label class="form-label">
+                        Category Filter
+                    </label>
+                    <InputSelect class="form-select" @bind-Value="CategoryId">
+                        <option value="">All Categories</option>
+                    </InputSelect>
+                </div>
+            </div>
+        </div>
+        <div class="col-12 col-lg-8">
+
+        </div>
+    </div>
 </div>
 
 @code {
