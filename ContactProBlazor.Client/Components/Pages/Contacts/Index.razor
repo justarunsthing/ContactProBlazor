@@ -26,7 +26,7 @@
             <div class="mb-3">
                 <form>
                     <div class="input-group">
-                        <InputText class="form-group" type="search" placeholder="Search Contacts..." />
+                        <InputText class="form-group" type="search" placeholder="Search Contacts..." @bind-Value="searchTerm" />
                         <input type="submit" class="btn btn-primary" value="search" />
                     </div>
                 </form>
@@ -83,6 +83,7 @@
     [SupplyParameterFromQuery]
     private int? CategoryId { get; set; }
 
+    private string? searchTerm;
     private UserInfo? userInfo;
     private IEnumerable<ContactDTO>? contacts = [];
     private IEnumerable<CategoryDTO>? categories = [];
