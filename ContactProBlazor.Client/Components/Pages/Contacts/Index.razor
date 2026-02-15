@@ -3,6 +3,9 @@
 @rendermode InteractiveServer
 
 @inject IContactDTOService ContactService
+@inject ICategoryDTOService CategoryService
+@inject NavigationManager NavigationManager
+
 <PageTitle>ContactPro | Contacts</PageTitle>
 
 <div class="container">
@@ -33,6 +36,13 @@
                     </label>
                     <InputSelect class="form-select" @bind-Value="CategoryId">
                         <option value="">All Categories</option>
+
+                        @foreach (CategoryDTO category in categories)
+                        {
+                            <option value="@category.Id">
+                                @category.Name
+                            </option>
+                        }
                     </InputSelect>
                 </div>
             </div>
@@ -57,5 +67,15 @@
     protected override async Task OnInitializedAsync()
     {
         userInfo = await UserInfoHelper.GetUserInfoAsync(authStateTask);
+
+        // Always try when querying DB
+        try
+        {
+            categories = await CategoryService.GetCategoriesAsync(userInfo!.UserId);
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex);
+        }
     }
 }
