@@ -20,5 +20,10 @@
 </div>
 
 @code {
+    [SupplyParameterFromQuery]
+    private int? CategoryId { get; set; }
 
+    private UserInfo? userInfo;
+    private IEnumerable<ContactDTO>? contacts = [];
+    private IEnumerable<CategoryDTO>? categories = [];
 }
