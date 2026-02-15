@@ -21,13 +21,13 @@
             </a>
         </div>
     </div>
-    <div class="row gap-3">
+    <div class="row g-3">
         <div class="col-12 col-lg-4">
-            <div class="mb-3">
+            <div class="mb-3 side-nav">
                 <form>
                     <div class="input-group">
                         <InputText class="form-group" type="search" placeholder="Search Contacts..." @bind-Value="searchTerm" />
-                        <input type="submit" class="btn btn-primary" value="search" />
+                        <input type="submit" class="btn btn-primary" value="Search" />
                     </div>
                 </form>
                 <div class="mt-5">
@@ -60,15 +60,10 @@
                 }
                 else
                 {
-                    <div class="text-center">
+                    <div class="text-center side-nav">
                         <h4>
                             No contacts found!
                         </h4>
-                        <p>
-                            <a href="/contacts/create" class="btn btn-primary rounded-pill">
-                                Create your first contact
-                            </a>
-                        </p>
                     </div>
                 }
             </div>
