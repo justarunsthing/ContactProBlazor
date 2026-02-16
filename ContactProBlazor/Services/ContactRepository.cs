@@ -18,6 +18,18 @@ namespace ContactProBlazor.Services
             return contact;
         }
 
+        public async Task<List<Contact>> GetContactsAsync(string userId)
+        {
+            using ApplicationDbContext context = contextFactory.CreateDbContext();
+
+            List<Contact> contacts = await context.Contacts
+                                                  .Where(c => c.AppUserId == userId)
+                                                  .Include(c => c.Categories)
+                                                  .ToListAsync();
+
+            return contacts;
+        }
+
         public async Task<Contact> CreateContactAsync(Contact contact)
         {
             using ApplicationDbContext context = contextFactory.CreateDbContext();
