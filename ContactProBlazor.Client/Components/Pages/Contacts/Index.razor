@@ -83,6 +83,7 @@
     private IEnumerable<ContactDTO>? contacts = [];
     private IEnumerable<CategoryDTO>? categories = [];
 
+    // Runs once on startup
     protected override async Task OnInitializedAsync()
     {
         userInfo = await UserInfoHelper.GetUserInfoAsync(authStateTask);
@@ -91,6 +92,23 @@
         try
         {
             categories = await CategoryService.GetCategoriesAsync(userInfo!.UserId);
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex);
+        }
+    }
+
+    // Runs every time a parameter is set, including on initial load and when the category filter changes
+    protected override async Task OnParametersSetAsync()
+    {
+        userInfo ??= await UserInfoHelper.GetUserInfoAsync(authStateTask);
+
+        CategoryId = null;
+
+        try
+        {
+            contacts = await ContactService.GetContactsAsync(userInfo!.UserId);
         }
         catch (Exception ex)
         {
