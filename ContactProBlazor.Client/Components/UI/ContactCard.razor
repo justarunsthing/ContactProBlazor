@@ -1,0 +1,34 @@
+﻿@if (Contact != null)
+{
+    <div class="card h-100">
+        <div class="row g-0">
+            <div class="col-md-4 square-img-container round-start overflow-hidden">
+                <img src="@Contact.ProfileImageUrl" class="square-img" />
+            </div>
+            <div class="col-md-8">
+                <div class="card-body">
+                    <h5 class="card-title">
+                        @Contact.FullName
+                    </h5>
+                    <address class="card-text">
+                        @Contact.Address1
+                        <br />
+
+                        @if (!string.IsNullOrEmpty(Contact.Address2))
+                        {
+                            @Contact.Address2
+                            <br />
+                        }
+
+                        @Contact.City, @Contact.PostCode
+                    </address>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+@code {
+    [Parameter, EditorRequired]
+    public ContactDTO? Contact { get; set; }
+}
