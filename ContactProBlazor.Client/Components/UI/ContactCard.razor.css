@@ -30,3 +30,12 @@
         opacity: 1;
         cursor: pointer;
     }
+
+/*Anchor tag with class badge*/
+a.badge {
+    transition: background-color 0.25s;
+}
+
+a.badge:hover {
+    background-color: var(--cf-theme-100);
+}
