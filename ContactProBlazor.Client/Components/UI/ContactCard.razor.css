@@ -16,3 +16,17 @@
     object-fit: cover;
     object-position: top;
 }
+
+.edit-icons {
+    font-size: 1.5rem;
+    opacity: 0.9;
+    color: #002A4E;
+    transition: color 0.25s;
+}
+
+    .edit-icons:hover {
+        color: #0869B8;
+        font-weight: bold;
+        opacity: 1;
+        cursor: pointer;
+    }
