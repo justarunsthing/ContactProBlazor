@@ -54,7 +54,7 @@
                     foreach (ContactDTO contact in contacts.OrderBy(c => c.LastName).ThenBy(c => c.FirstName))
                     {
                         <div class="col">
-                            @contact.FirstName @contact.LastName
+                            <ContactCard Contact="contact" />
                         </div>
                     }
                 }
