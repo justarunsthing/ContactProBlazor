@@ -8,6 +8,13 @@ namespace ContactProBlazor.Services
 {
     public class ContactDTOService(IContactRepository repository) : IContactDTOService
     {
+        public async Task<ContactDTO?> GetContactByIdAsync(int id, string userId)
+        {
+            Contact? contact = await repository.GetContactByIdAsync(id, userId);
+
+            return contact?.ToDTO();
+        }
+
         public async Task<List<ContactDTO>> GetContactsAsync(string userId)
         {
             List<Contact> contacts = await repository.GetContactsAsync(userId);
