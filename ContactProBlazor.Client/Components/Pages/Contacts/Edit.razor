@@ -11,7 +11,7 @@
 {
     <div class="container">
         <div class="p-3 my-5 border border-2 shadow-lg bg-light">
-            <ContactForm Contact="contact" />
+            <ContactForm Contact="contact" OnSubmit="HandleSubmit" />
         </div>
     </div>
 }
@@ -26,8 +26,16 @@
     private UserInfo? userInfo;
     private ContactDTO? contact;
 
-    public override async Task OnInitializedAsync()
+    protected override async Task OnInitializedAsync()
     {
         userInfo = await UserInfoHelper.GetUserInfoAsync(authStateTask);
+    }
+
+    private async Task HandleSubmit(ContactDTO contact)
+    {
+        if (userInfo != null)
+        {
+            NavigationManager.NavigateTo("/contacts");
+        }
     }
 }
