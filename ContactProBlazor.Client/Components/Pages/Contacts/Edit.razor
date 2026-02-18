@@ -29,6 +29,12 @@
     protected override async Task OnInitializedAsync()
     {
         userInfo = await UserInfoHelper.GetUserInfoAsync(authStateTask);
+        contact = await ContactService.GetContactByIdAsync(ContactId, userInfo!.UserId);
+
+        if (contact == null)
+        {
+            NavigationManager.NavigateTo("/contacts");
+        }
     }
 
     private async Task HandleSubmit(ContactDTO contact)
