@@ -1,0 +1,33 @@
+﻿@page "/contacts/edit/{contactId:int}"
+@attribute [Authorize]
+@rendermode InteractiveServer
+
+@inject IContactDTOService ContactService
+@inject NavigationManager NavigationManager
+
+<PageTitle>ContactPro | @(contact?.FullName ?? "Loading...")</PageTitle>
+
+@if (contact != null)
+{
+    <div class="container">
+        <div class="p-3 my-5 border border-2 shadow-lg bg-light">
+            <ContactForm Contact="contact" />
+        </div>
+    </div>
+}
+
+@code {
+    [CascadingParameter]
+    public Task<AuthenticationState>? authStateTask { get; set; }
+
+    [Parameter]
+    public int ContactId { get; set; }
+
+    private UserInfo? userInfo;
+    private ContactDTO? contact;
+
+    public override async Task OnInitializedAsync()
+    {
+        userInfo = await UserInfoHelper.GetUserInfoAsync(authStateTask);
+    }
+}
