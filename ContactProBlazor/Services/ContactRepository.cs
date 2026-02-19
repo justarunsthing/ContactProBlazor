@@ -65,5 +65,38 @@ namespace ContactProBlazor.Services
                 await context.SaveChangesAsync();
             }
         }
+
+        public async Task UpdateContactAsync(Contact contact)
+        {
+            using ApplicationDbContext context = contextFactory.CreateDbContext();
+
+            if (await context.Contacts.AnyAsync(c => c.Id == contact.Id && c.AppUserId == contact.AppUserId))
+            {
+                ImageUpload? oldImage = null;
+
+                // User changed image
+                if (contact.Image != null)
+                {
+                    if (contact.Image.Id != contact.ImageId)
+                    {
+                        // Find the old image
+                        oldImage = await context.Images.FirstOrDefaultAsync(img => img.Id == contact.ImageId);
+                    }
+
+                    // Save the new image
+                    contact.ImageId = contact.Image.Id;
+                    context.Images.Add(contact.Image);
+                }
+
+                context.Contacts.Update(contact);
+                await context.SaveChangesAsync();
+
+                if (oldImage != null)
+                {
+                    context.Images.Remove(oldImage);
+                    await context.SaveChangesAsync();
+                }
+            }
+        }
     }
 }
