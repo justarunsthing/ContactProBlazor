@@ -58,5 +58,44 @@ namespace ContactProBlazor.Services
 
             return newContact.ToDTO();
         }
+
+        public async Task UpdateContactAsync(ContactDTO dto, string userId)
+        {
+            Contact? contact = await repository.GetContactByIdAsync(dto.Id, userId);
+
+            if (contact != null)
+            {
+                contact.FirstName = dto.FirstName;
+                contact.LastName = dto.LastName;
+                contact.BirthDate = dto.BirthDate;
+                contact.Address1 = dto.Address1;
+                contact.Address2 = dto.Address2;
+                contact.City = dto.City;
+                contact.PostCode = dto.PostCode;
+                contact.Email = dto.Email;
+                contact.PhoneNumber = dto.PhoneNumber;
+
+                // User updated image
+                if (dto.ProfileImageUrl?.StartsWith("data:") == true)
+                {
+                    contact.Image = ImageHelper.GetImageUploadFromUrl(dto.ProfileImageUrl);
+                }
+                else
+                {
+                    contact.Image = null;
+                }
+
+                // Clear existing categories and update with new ones, prevent duplicates and new insertions
+                contact.Categories.Clear();
+                // Update contact first to ensure the contact is saved before updating categories
+                await repository.UpdateContactAsync(contact);
+                // Remove existing categories
+                await repository.RemoveCategoriesFromContactAsync(contact.Id, userId);
+
+                // Add new categories
+                List<int> categoryIds = dto.Categories?.Select(c => c.Id).ToList() ?? [];
+                await repository.AddCategoriesToContactAsync(contact.Id, userId, categoryIds);
+            }
+        }
     }
 }
