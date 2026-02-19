@@ -98,5 +98,20 @@ namespace ContactProBlazor.Services
                 }
             }
         }
+
+        public async Task RemoveCategoriesFromContactAsync(int contactId, string userId)
+        {
+            using ApplicationDbContext context = contextFactory.CreateDbContext();
+
+            Contact? contact = await context.Contacts
+                                            .Include(c => c.Categories)
+                                            .FirstOrDefaultAsync(c => c.Id == contactId && c.AppUserId == userId);
+
+            if (contact != null)
+            {
+                contact.Categories.Clear();
+                await context.SaveChangesAsync();
+            }
+        }
     }
 }
