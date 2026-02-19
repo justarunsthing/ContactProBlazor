@@ -41,6 +41,7 @@
     {
         if (userInfo != null)
         {
+            await ContactService.UpdateContactAsync(contact, userInfo!.UserId);
             NavigationManager.NavigateTo("/contacts");
         }
     }
