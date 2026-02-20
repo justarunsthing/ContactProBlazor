@@ -97,5 +97,10 @@ namespace ContactProBlazor.Services
                 await repository.AddCategoriesToContactAsync(contact.Id, userId, categoryIds);
             }
         }
+
+        public async Task DeleteContactAsync(int id, string userId)
+        {
+            await repository.DeleteContactAsync(id, userId);
+        }
     }
 }

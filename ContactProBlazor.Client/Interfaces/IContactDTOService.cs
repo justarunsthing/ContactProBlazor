@@ -8,5 +8,6 @@ namespace ContactProBlazor.Client.Interfaces
         Task<List<ContactDTO>> GetContactsAsync(string userId);
         Task<ContactDTO> CreateContactAsync(ContactDTO dto, string userId);
         Task UpdateContactAsync(ContactDTO dto, string userId);
+        Task DeleteContactAsync(int id, string userId);
     }
 }
