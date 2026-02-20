@@ -10,5 +10,6 @@ namespace ContactProBlazor.Interfaces
         Task AddCategoriesToContactAsync(int contactId, string userId, List<int> categoryIds);
         Task UpdateContactAsync(Contact contact);
         Task RemoveCategoriesFromContactAsync(int contactId, string userId);
+        Task DeleteContactAsync(int id, string userId);
     }
 }

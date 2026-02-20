@@ -113,5 +113,18 @@ namespace ContactProBlazor.Services
                 await context.SaveChangesAsync();
             }
         }
+
+        public async Task DeleteContactAsync(int id, string userId)
+        {
+            using ApplicationDbContext context = contextFactory.CreateDbContext();
+
+            Contact? contact = await context.Contacts.FirstOrDefaultAsync(c => c.Id == id && c.AppUserId == userId);
+
+            if (contact != null)
+            {
+                context.Contacts.Remove(contact);
+                await context.SaveChangesAsync();
+            }
+        }
     }
 }
