@@ -28,17 +28,39 @@
                     <div class="card-text text-truncate">
                         <span class="fw-bold me-2">Email:</span>@Contact.Email
                     </div>
-                    <div class="fs-4">
-                        <a class="me-3 edit-icons" href="/contacts/edit/@Contact.Id">
-                            <i class="bi bi-pencil-fill"></i>
-                        </a>
-                        <a class="me-3 edit-icons" href="">
-                            <i class="bi bi-envelope-fill"></i>
-                        </a>
-                        <a class="me-3 edit-icons" href="">
-                            <i class="bi bi-trash-fill text-danger"></i>
-                        </a>
-                    </div>
+
+                    @if (isDeleting == false)
+                    {
+                        <div class="fs-4">
+                            <a class="me-3 edit-icons" href="/contacts/edit/@Contact.Id">
+                                <i class="bi bi-pencil-fill"></i>
+                            </a>
+                            <a class="me-3 edit-icons" href="">
+                                <i class="bi bi-envelope-fill"></i>
+                            </a>
+                            <a class="me-3 edit-icons" role="button" @onclick="() => isDeleting = true">
+                                <i class="bi bi-trash-fill text-danger"></i>
+                            </a>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="vstack mb-2">
+                            <span class="text-danger">
+                                Are you sure you want to delete this contact?
+                            </span>
+                            <div class="hstack gap-2">
+                                <button class="btn btn-sm btn-danger">
+                                    Delete
+                                </button>
+                                <button class="btn btn-sm btn-secondary">
+                                    Cancel
+                                </button>
+
+                            </div>
+                        </div>
+                    }
+
                     <div class="hstack gap-2 flex-wrap">
                         @foreach (CategoryDTO category in Contact.Categories.OrderBy(c => c.Name))
                         {
@@ -56,4 +78,6 @@
 @code {
     [Parameter, EditorRequired]
     public ContactDTO? Contact { get; set; }
+
+    private bool isDeleting = false;
 }
