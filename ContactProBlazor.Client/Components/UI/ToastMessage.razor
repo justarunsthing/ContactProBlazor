@@ -3,7 +3,8 @@
 
 @if (!string.IsNullOrEmpty(Message))
 {
-    <div class="toast text-@Color-emphasis bg-@Color-subtle border-@Color" role="alert" aria-live="assertive" aria-atomic="true" @ref="toast">
+    // @ref is used to get a reference to the toast element & pass the entire div below 
+    <div class="toast text-@Color-emphasis bg-@Color-subtle border-@Color @(jsFailed ? "show" : "")" role="alert" aria-live="assertive" aria-atomic="true" @ref="toast">
         <div class="d-flex">
             <div class="toast-body flex-grow-1">
                 @Message
@@ -34,7 +35,27 @@
 
     // Imported JS file
     private IJSObjectReference? toastJSModule;
-    private bool jsModuleLoaded = false;
+    private bool jsFailed = false;
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            try
+            {
+                // Import the isolated js file for this component
+                toastJSModule = await JS.InvokeAsync<IJSObjectReference>("import", "./Components/UI/ToastMessage.razor.js");
+
+                // Call the export function to initialize & show the toast
+                await toastJSModule.InvokeVoidAsync("initToast", toast);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+                jsFailed = true;
+            }
+        }
+    }
 
     public async ValueTask DisposeAsync()
     {
