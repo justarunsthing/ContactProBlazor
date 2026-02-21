@@ -32,6 +32,10 @@
     /// </summary>
     private ElementReference? toast;
 
+    // Imported JS file
+    private IJSObjectReference? toastJSModule;
+    private bool jsModuleLoaded = false;
+
     public async ValueTask DisposeAsync()
     {
     
