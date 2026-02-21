@@ -49,7 +49,7 @@
 
             @if (!string.IsNullOrEmpty(toastMessage))
             {
-                <ToastMessage @key="messageId" Message="@toastMessage" Color="toastColor" />
+                <ToastMessage @key="messageId" Message="@toastMessage" Color="@toastColor" />
             }
         </div>
         <div class="col-12 col-lg-8 mb-5">
@@ -132,10 +132,20 @@
 
             // Could be in searching/filtering state so best to just remove the deleted contact
             contacts = contacts.Where(c => c.Id != id);
+
+            ShowToastMessage("Contact deleted successfully!", "success");
         }
         catch (Exception ex)
         {
             Console.WriteLine(ex);
+            ShowToastMessage("Failed to delete contact. Please try again.", "danger");
         }
+    }
+
+    private void ShowToastMessage(string message, string color)
+    {
+        toastMessage = message;
+        toastColor = color;
+        messageId = Guid.NewGuid(); // Force re-render of ToastMessage when showing a new message
     }
 }
