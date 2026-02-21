@@ -46,6 +46,11 @@
                     </InputSelect>
                 </div>
             </div>
+
+            @if (!string.IsNullOrEmpty(toastMessage))
+            {
+                <ToastMessage @key="messageId" Message="@toastMessage" Color="toastColor" />
+            }
         </div>
         <div class="col-12 col-lg-8 mb-5">
             <div class="row row-cols-1 row-cols-sm-2 row-cols-md-1">
@@ -79,6 +84,9 @@
     private int? CategoryId { get; set; }
 
     private string? searchTerm;
+    private string? toastMessage;
+    private string? toastColor;
+    private Guid messageId = Guid.NewGuid(); // Used to force re-render of ToastMessage when showing a new message
     private UserInfo? userInfo;
     private IEnumerable<ContactDTO>? contacts = [];
     private IEnumerable<CategoryDTO>? categories = [];
