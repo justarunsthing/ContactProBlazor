@@ -1,0 +1,39 @@
+﻿@implements IAsyncDisposable
+@inject IJSRuntime JS
+
+@if (!string.IsNullOrEmpty(Message))
+{
+    <div class="toast text-@Color-emphasis bg-@Color-subtle border-@Color" role="alert" aria-live="assertive" aria-atomic="true" @ref="toast">
+        <div class="d-flex">
+            <div class="toast-body flex-grow-1">
+                @Message
+            </div>
+            <button type="button" class="btn-close m-2 mb-auto" data-bs-dismiss="toast" aria-label="Close">
+
+            </button>
+        </div>
+    </div>
+}
+
+@code {
+    /// <summary>
+    /// The message to be displayed in the toast notification
+    /// </summary>
+    [Parameter, EditorRequired]
+    public string? Message { get; set; }
+
+    /// <summary>
+    /// The color of the toast notification, can be set to any valid Bootstrap color class
+    [Parameter]
+    public string? Color { get; set; } = "success";
+
+    /// <summary>
+    /// Reference to the toast element for JavaScript interop to show and hide the toast notification
+    /// </summary>
+    private ElementReference? toast;
+
+    public async ValueTask DisposeAsync()
+    {
+    
+    }
+}
