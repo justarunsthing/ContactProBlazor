@@ -57,8 +57,14 @@
         }
     }
 
+    /// <summary>
+    /// Any imported JS file should be disposed
+    /// </summary>
     public async ValueTask DisposeAsync()
     {
-    
+        if (toastJSModule != null)
+        {
+            await toastJSModule.DisposeAsync();
+        }
     }
 }
