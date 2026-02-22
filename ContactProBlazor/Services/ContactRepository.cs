@@ -30,6 +30,23 @@ namespace ContactProBlazor.Services
             return contacts;
         }
 
+        public async Task<List<Contact>> SearchContactsAsync(string searchTerm, string userId)
+        {
+            using ApplicationDbContext context = contextFactory.CreateDbContext();
+
+            string searchTermLower = searchTerm.Trim().ToLower();
+            List<Contact> contacts = await context.Contacts
+                                                  .Where(c => c.AppUserId == userId)
+                                                  .Include(c => c.Categories)
+                                                  .Where(c => string.IsNullOrEmpty(searchTermLower)
+                                                           || c.FirstName!.ToLower().Contains(searchTermLower)
+                                                           || c.LastName!.ToLower().Contains(searchTermLower)
+                                                           || c.Categories.Any(cat => cat.Name!.ToLower().Contains(searchTermLower))
+                                                  ).ToListAsync();
+
+            return contacts;
+        }
+
         public async Task<Contact> CreateContactAsync(Contact contact)
         {
             using ApplicationDbContext context = contextFactory.CreateDbContext();
