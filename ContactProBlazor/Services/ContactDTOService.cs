@@ -23,6 +23,14 @@ namespace ContactProBlazor.Services
             return dtos;
         }
 
+        public async Task<List<ContactDTO>> SearchContactsAsync(string searchTerm, string userId)
+        {
+            List<Contact> contacts = await repository.SearchContactsAsync(searchTerm, userId);
+            List<ContactDTO> dtos = [.. contacts.Select(c => c.ToDTO())];
+
+            return dtos;
+        }
+
         public async Task<ContactDTO> CreateContactAsync(ContactDTO dto, string userId)
         {
             Contact newContact = new()
