@@ -26,7 +26,7 @@
             <div class="mb-3 side-nav">
                 <form>
                     <div class="input-group">
-                        <InputText class="form-group" type="search" placeholder="Search Contacts..." @bind-Value="searchTerm" />
+                        <InputText class="form-group" type="search" placeholder="Search Contacts..." @bind-Value="searchInput" />
                         <input type="submit" class="btn btn-primary" value="Search" />
                     </div>
                 </form>
@@ -83,7 +83,10 @@
     [SupplyParameterFromQuery]
     private int? CategoryId { get; set; }
 
-    private string? searchTerm;
+    [SupplyParameterFromQuery]
+    private string? SearchTerm { get; set; }
+
+    private string? searchInput;
     private string? toastMessage;
     private string? toastColor;
     private Guid messageId = Guid.NewGuid(); // Used to force re-render of ToastMessage when showing a new message
@@ -111,16 +114,24 @@
     protected override async Task OnParametersSetAsync()
     {
         userInfo ??= await UserInfoHelper.GetUserInfoAsync(authStateTask);
-
+        searchInput = SearchTerm;
         CategoryId = null;
 
         try
         {
-            contacts = await ContactService.GetContactsAsync(userInfo!.UserId);
+            if (!string.IsNullOrWhiteSpace(SearchTerm))
+            {
+                contacts = await ContactService.SearchContactsAsync(SearchTerm, userInfo!.UserId);
+            }
+            else
+            {
+                contacts = await ContactService.GetContactsAsync(userInfo!.UserId);
+            }
         }
         catch (Exception ex)
         {
             Console.WriteLine(ex);
+            ShowToastMessage("Failed to load contacts. Please try again.", "danger");
         }
     }
 
