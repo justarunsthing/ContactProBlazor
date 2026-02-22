@@ -24,7 +24,7 @@
     <div class="row g-3">
         <div class="col-12 col-lg-4">
             <div class="mb-3 side-nav">
-                <form>
+                <form @onsubmit="SearchContacts">
                     <div class="input-group">
                         <InputText class="form-group" type="search" placeholder="Search Contacts..." @bind-Value="searchInput" />
                         <input type="submit" class="btn btn-primary" value="Search" />
@@ -151,6 +151,19 @@
             Console.WriteLine(ex);
             ShowToastMessage("Failed to delete contact. Please try again.", "danger");
         }
+    }
+
+    private void SearchContacts()
+    {
+        Dictionary<string, object?> queryParameters = new Dictionary<string, object?>
+        {
+            { nameof(SearchTerm), searchInput }
+        };
+
+        string url = NavigationManager.GetUriWithQueryParameters(queryParameters);
+
+        // This will trigger OnParametersSetAsync to run again with the new SearchTerm query parameter, refreshing the page and showing the search results
+        NavigationManager.NavigateTo(url);
     }
 
     private void ShowToastMessage(string message, string color)
