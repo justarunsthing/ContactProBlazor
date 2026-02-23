@@ -6,6 +6,7 @@ namespace ContactProBlazor.Interfaces
     {
         Task<Contact?> GetContactByIdAsync(int id, string userId);
         Task<List<Contact>> GetContactsAsync(string userId);
+        Task<List<Contact>> GetContactsByCategoryAsync(int categoryId, string userId);
         Task<List<Contact>> SearchContactsAsync(string searchTerm, string userId);
         Task<Contact> CreateContactAsync(Contact contact);
         Task AddCategoriesToContactAsync(int contactId, string userId, List<int> categoryIds);
