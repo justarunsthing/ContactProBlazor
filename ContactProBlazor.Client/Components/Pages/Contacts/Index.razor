@@ -116,7 +116,6 @@
     {
         userInfo ??= await UserInfoHelper.GetUserInfoAsync(authStateTask);
         searchInput = SearchTerm;
-        CategoryId = null;
 
         try
         {
@@ -125,7 +124,7 @@
                 CategoryId = null;
                 contacts = await ContactService.SearchContactsAsync(SearchTerm, userInfo!.UserId);
             }
-            else if (CategoryId != null || CategoryId != 0) // CategoryId is not null or 0
+            else if (CategoryId != null) // CategoryId is not null or 0
             {
                 SearchTerm = null;
                 contacts = await ContactService.GetContactsByCategoryAsync(CategoryId!.Value, userInfo!.UserId);
