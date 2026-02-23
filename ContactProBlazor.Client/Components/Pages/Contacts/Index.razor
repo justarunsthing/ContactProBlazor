@@ -34,7 +34,8 @@
                     <label class="form-label">
                         Category Filter
                     </label>
-                    <InputSelect class="form-select" @bind-Value="CategoryId">
+                    @* After category id is selected, the OnCategorySelected is triggered by bind-Value:after *@
+                    <InputSelect class="form-select" @bind-Value="CategoryId" @bind-Value:after="OnCategorySelected">
                         <option value="">All Categories</option>
 
                         @foreach (CategoryDTO category in categories)
