@@ -111,7 +111,7 @@
         }
     }
 
-    // Runs every time a parameter is set, including on initial load and when the category filter changes
+    // Runs every time a parameter is set, including on initial load and when the category filter changes or search term changes
     protected override async Task OnParametersSetAsync()
     {
         userInfo ??= await UserInfoHelper.GetUserInfoAsync(authStateTask);
@@ -122,7 +122,13 @@
         {
             if (!string.IsNullOrWhiteSpace(SearchTerm))
             {
+                CategoryId = null;
                 contacts = await ContactService.SearchContactsAsync(SearchTerm, userInfo!.UserId);
+            }
+            else if (CategoryId != null || CategoryId != 0) // CategoryId is not null or 0
+            {
+                SearchTerm = null;
+                contacts = await ContactService.GetContactsByCategoryAsync(CategoryId!.Value, userInfo!.UserId);
             }
             else
             {
