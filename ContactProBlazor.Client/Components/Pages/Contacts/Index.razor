@@ -157,12 +157,27 @@
     {
         Dictionary<string, object?> queryParameters = new Dictionary<string, object?>
         {
-            { nameof(SearchTerm), searchInput }
+            { nameof(SearchTerm), searchInput },
+            { nameof(CategoryId), null } // Search either by search term OR by category
         };
 
         string url = NavigationManager.GetUriWithQueryParameters(queryParameters);
 
         // This will trigger OnParametersSetAsync to run again with the new SearchTerm query parameter, refreshing the page and showing the search results
+        NavigationManager.NavigateTo(url);
+    }
+
+    private void OnCategorySelected()
+    {
+        Dictionary<string, object?> queryParameters = new Dictionary<string, object?>
+        {
+            { nameof(SearchTerm), null }, // Search either by search term OR by category
+            { nameof(CategoryId), CategoryId }
+        };
+
+        string url = NavigationManager.GetUriWithQueryParameters(queryParameters);
+
+        // This will trigger OnParametersSetAsync to run again with the new CategoryId query parameter, refreshing the page and showing the search results
         NavigationManager.NavigateTo(url);
     }
 
