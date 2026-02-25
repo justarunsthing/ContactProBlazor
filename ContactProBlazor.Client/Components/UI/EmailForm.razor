@@ -1,7 +1,7 @@
 ﻿@if (EmailData != null)
 {
     <div class="p-2">
-        <EditForm Model="EmailData">
+        <EditForm Model="EmailData" OnValidSubmit="HandleSubmitAsync">
             <DataAnnotationsValidator />
 
             <div class="row row-cols-1 g-3">
@@ -43,4 +43,12 @@
 @code {
     [Parameter, EditorRequired]
     public EmailData? EmailData { get; set; }
+
+    [Parameter, EditorRequired]
+    public EventCallback<EmailData> OnSubmit { get; set;  }
+
+    private async Task HandleSubmitAsync()
+    {
+        await OnSubmit.InvokeAsync(EmailData);
+    }
 }
