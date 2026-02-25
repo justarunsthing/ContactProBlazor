@@ -1,0 +1,46 @@
+﻿@if (EmailData != null)
+{
+    <div class="p-2">
+        <EditForm Model="EmailData">
+            <DataAnnotationsValidator />
+
+            <div class="row row-cols-1 g-3">
+                <div class="col">
+                    <label class="form-label">To:</label>
+                    <InputTextArea type="email" readonly class="form-control" rows="3" @bind-Value="EmailData.Recipients">
+
+                    </InputTextArea>
+                    <ValidationMessage For="() => EmailData.Recipients" />
+                </div>
+                <div class="col">
+                    <label class="form-label">Subject:</label>
+                    <InputText type="text" class="form-control" @bind-Value="EmailData.Subject" />
+                    <ValidationMessage For="() => EmailData.Subject" />
+                </div>
+                <div class="col">
+                    <label class="form-label">Message:</label>
+                    <InputTextArea class="form-control" rows="10" @bind-Value="EmailData.Body">
+
+                    </InputTextArea>
+                    <ValidationMessage For="() => EmailData.Body" />
+                </div>
+                <div class="col text-end">
+                    <button type="submit" class="btn btn-lg btn-primary rounded-pill">
+                        Send
+                    </button>
+                </div>
+                <div class="col text-start">
+                    <a href="/contacts" class="btn">
+                        <i class="bi bi-arrow-left"></i>
+                        Back to contacts
+                    </a>
+                </div>
+            </div>
+        </EditForm>
+    </div>
+}
+
+@code {
+    [Parameter, EditorRequired]
+    public EmailData? EmailData { get; set; }
+}
