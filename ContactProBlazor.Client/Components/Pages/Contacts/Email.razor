@@ -23,7 +23,34 @@
 
     private ContactDTO? contact;
     private UserInfo? userInfo;
-    private EmailData emailData;
+    private EmailData? emailData;
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            userInfo = await UserInfoHelper.GetUserInfoAsync(authStateTask);
+            contact = await ContactService.GetContactByIdAsync(ContactId, userInfo!.UserId);
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex);
+        }
+
+        if (contact != null)
+        {
+            emailData = new EmailData()
+            {
+                Recipients = contact.Email!,
+                Subject = $"Message for {contact.FullName}",
+                Body = string.Empty
+            };
+        }
+        else
+        {
+            NavigationManager.NavigateTo("/contacts");
+        }
+    }
 
     private async Task SendEmailAsync(EmailData emailData)
     {
