@@ -1,8 +1,17 @@
 ﻿@page "/contacts/email/{contactId:int}"
+@attribute [Authorize]
+@rendermode InteractiveServer
+
+@inject IContactDTOService ContactService
+@inject NavigationManager NavigationManager
 
 @if (emailData != null)
 {
-    
+    <div class="card shadow-lg my-3">
+        <div class="card-body">
+            <EmailForm EmailData="emailData" OnSubmit="SendEmailAsync" />
+        </div>
+    </div>
 }
 
 @code {
@@ -15,4 +24,9 @@
     private ContactDTO? contact;
     private UserInfo? userInfo;
     private EmailData emailData;
+
+    private async Task SendEmailAsync(EmailData emailData)
+    {
+        NavigationManager.NavigateTo("/contacts");
+    }
 }
