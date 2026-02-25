@@ -7,9 +7,11 @@
 
 @if (emailData != null)
 {
-    <div class="card shadow-lg my-3">
-        <div class="card-body">
-            <EmailForm EmailData="emailData" OnSubmit="SendEmailAsync" />
+    <div class="container">
+        <div class="card shadow-lg my-3">
+            <div class="card-body">
+                <EmailForm EmailData="emailData" OnSubmit="SendEmailAsync" />
+            </div>
         </div>
     </div>
 }
