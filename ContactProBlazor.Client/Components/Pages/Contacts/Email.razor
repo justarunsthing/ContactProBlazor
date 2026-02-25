@@ -1,0 +1,18 @@
+﻿@page "/contacts/email/{contactId:int}"
+
+@if (emailData != null)
+{
+    
+}
+
+@code {
+    [Parameter]
+    public int ContactId { get; set; }
+
+    [CascadingParameter]
+    private Task<AuthenticationState>? authStateTask { get; set; }
+
+    private ContactDTO? contact;
+    private UserInfo? userInfo;
+    private EmailData emailData;
+}
