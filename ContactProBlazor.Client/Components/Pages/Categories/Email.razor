@@ -29,6 +29,33 @@
     private UserInfo? userInfo;
     private EmailData? emailData;
 
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            userInfo = await UserInfoHelper.GetUserInfoAsync(authStateTask);
+            category = await CategoryService.GetCategoryByIdAsync(CategoryId, userInfo!.UserId);
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex);
+        }
+
+        if (category != null)
+        {
+            emailData = new EmailData()
+            {
+                Recipients = string.Join(";", category.Contacts.Select(c => c.Email)),
+                Subject = $"Group message for {category.Name}",
+                Body = string.Empty
+            };
+        }
+        else
+        {
+            NavigationManager.NavigateTo("/categories");
+        }
+    }
+
     private async Task SendEmailAsync(EmailData emailData)
     {
         NavigationManager.NavigateTo("/categories");
