@@ -1,0 +1,36 @@
+﻿@page "/categories/email/{categoryId:int}"
+@attribute [Authorize]
+@rendermode InteractiveServer
+
+@inject ICategoryDTOService CategoryService
+@inject NavigationManager NavigationManager
+
+<PageTitle>ContactPro | Email Category</PageTitle>
+
+@if (emailData != null)
+{
+    <div class="container">
+        <div class="card shadow-lg my-3">
+            <div class="card-body">
+                <EmailForm EmailData="emailData" OnSubmit="SendEmailAsync" />
+            </div>
+        </div>
+    </div>
+}
+
+@code {
+    [Parameter]
+    public int CategoryId { get; set; }
+
+    [CascadingParameter]
+    private Task<AuthenticationState>? authStateTask { get; set; }
+
+    private CategoryDTO? category;
+    private UserInfo? userInfo;
+    private EmailData? emailData;
+
+    private async Task SendEmailAsync(EmailData emailData)
+    {
+        NavigationManager.NavigateTo("/categories");
+    }
+}
