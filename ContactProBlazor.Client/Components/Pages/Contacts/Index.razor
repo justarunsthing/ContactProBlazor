@@ -87,6 +87,9 @@
     [SupplyParameterFromQuery]
     private string? SearchTerm { get; set; }
 
+    [SupplyParameterFromQuery]
+    private string? Message { get; set; }
+
     private string? searchInput;
     private string? toastMessage;
     private string? toastColor;
@@ -116,6 +119,11 @@
     {
         userInfo ??= await UserInfoHelper.GetUserInfoAsync(authStateTask);
         searchInput = SearchTerm;
+
+        if (!string.IsNullOrEmpty(Message))
+        {
+            ShowToastMessage(Message, "danger");
+        }
 
         try
         {

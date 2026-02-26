@@ -52,12 +52,14 @@
         }
         else
         {
-            NavigationManager.NavigateTo("/categories");
+            NavigationManager.NavigateTo("/contacts");
         }
     }
 
     private async Task SendEmailAsync(EmailData emailData)
     {
-        NavigationManager.NavigateTo("/categories");
+        string message = "Something went wrong! Please try again later.";
+
+        NavigationManager.NavigateTo($"/contacts?message={message}");
     }
 }
