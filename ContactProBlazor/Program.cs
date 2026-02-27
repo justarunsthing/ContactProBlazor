@@ -6,6 +6,7 @@ using ContactProBlazor.Interfaces;
 using ContactProBlazor.Services;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -56,6 +57,10 @@ builder.Services.AddScoped<IContactRepository, ContactRepository>();
 // DTO Services
 builder.Services.AddScoped<ICategoryDTOService, CategoryDTOService>();
 builder.Services.AddScoped<IContactDTOService, ContactDTOService>();
+
+// Email Services
+builder.Services.AddSingleton<IEmailSender<ApplicationUser>, SendGridService>();
+builder.Services.AddSingleton<IEmailSender, SendGridService>();
 
 var app = builder.Build();
 
