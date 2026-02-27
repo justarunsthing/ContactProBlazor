@@ -26,9 +26,27 @@ namespace ContactProBlazor.Services
                 ?? throw new InvalidOperationException("SendGridName not found in config!");
         }
 
-        public Task SendEmailAsync(string email, string subject, string htmlMessage)
+        public async Task SendEmailAsync(string email, string subject, string htmlMessage)
         {
-            throw new NotImplementedException();
+            SendGridClient client = new(_sendGridKey);
+            EmailAddress from = new(_fromAddress, _fromName);
+
+            // Matches & removes any HTML tags as we don't know if user can display system generated HTML
+            string plainTextContent = Regex.Replace(htmlMessage, "<[a-zA-Z/].*?>", "").Trim();
+            List<string> emails = [.. email.Split(";", StringSplitOptions.TrimEntries | StringSplitOptions.RemoveEmptyEntries)];
+            List<EmailAddress> addresses = [.. emails.Select(e => new EmailAddress(e))];
+            SendGridMessage message = MailHelper.CreateSingleEmailToMultipleRecipients(from, addresses, subject, plainTextContent, htmlMessage);
+
+            Response response = await client.SendEmailAsync(message);
+
+            if (response.IsSuccessStatusCode == false)
+            {
+                Console.WriteLine("******** EMAIL SERVICE ERROR ********");
+                Console.WriteLine(await response.Body.ReadAsStringAsync());
+                Console.WriteLine("******** EMAIL SERVICE ERROR ********");
+
+                throw new BadHttpRequestException("SendGrid email could not be sent!");
+            }
         }
 
         public Task SendConfirmationLinkAsync(ApplicationUser user, string email, string confirmationLink) => 
