@@ -119,5 +119,26 @@ namespace ContactProBlazor.Services
         {
             await repository.DeleteContactAsync(id, userId);
         }
+
+        public async Task<bool> EmailContactAsync(int id, EmailData emailData, string userId)
+        {
+            Contact? contact = await repository.GetContactByIdAsync(id, userId);
+
+            if (contact == null)
+            {
+                return false;
+            }
+
+            try
+            {
+                await emailSender.SendEmailAsync(contact.Email, emailData.Subject, emailData.Body);
+
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
     }
 }
