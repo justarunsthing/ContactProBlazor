@@ -57,7 +57,25 @@ namespace ContactProBlazor.Services
 
         public async Task<bool> EmailCategoryAsync(int id, EmailData emailData, string userId)
         {
-            throw new NotImplementedException();
+            Category? category = await repository.GetCategoryAsync(id, userId);
+
+            if (category == null || category.Contacts.Count < 1)
+            {
+                return false;
+            }
+
+            try
+            {
+                string recipients = string.Join(";", category.Contacts.Select(c => c.Email));
+
+                await emailSender.SendEmailAsync(recipients, emailData.Subject, emailData.Body);
+
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
         }
     }
 }
