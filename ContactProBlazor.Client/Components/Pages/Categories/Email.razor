@@ -60,6 +60,20 @@
     {
         string message = "Something went wrong! Please try again later.";
 
+        try
+        {
+            bool success = await CategoryService.EmailCategoryAsync(CategoryId, emailData, userInfo!.UserId);
+
+            if (success)
+            {
+                message = $"Email sent successfully to contacts in your {category!.Name} category";
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex);
+        }
+
         NavigationManager.NavigateTo($"/contacts?message={message}");
     }
 }
