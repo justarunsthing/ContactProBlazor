@@ -19,10 +19,10 @@ namespace ContactProBlazor.Services
             _sendGridKey = config["SendGridKey"] ?? Environment.GetEnvironmentVariable("SendGridKey")
                 ?? throw new InvalidOperationException("SendGridKey not found in config!");
 
-            _fromAddress = _sendGridKey = config["SendGridEmail"] ?? Environment.GetEnvironmentVariable("SendGridEmail")
+            _fromAddress = config["SendGridEmail"] ?? Environment.GetEnvironmentVariable("SendGridEmail")
                 ?? throw new InvalidOperationException("SendGridEmail not found in config!");
 
-            _fromName = _sendGridKey = config["SendGridName"] ?? Environment.GetEnvironmentVariable("SendGridName") 
+            _fromName = config["SendGridName"] ?? Environment.GetEnvironmentVariable("SendGridName") 
                 ?? throw new InvalidOperationException("SendGridName not found in config!");
         }
 
