@@ -9,5 +9,6 @@ namespace ContactProBlazor.Client.Interfaces
         Task<CategoryDTO> CreateCategoryAsync(CategoryDTO category, string userId);
         Task UpdateCategoryAsync(CategoryDTO category, string userId);
         Task DeleteCategoryAsync(int id, string userId);
+        Task<bool> EmailCategoryAsync(int id, EmailData emailData, string userId);
     }
 }

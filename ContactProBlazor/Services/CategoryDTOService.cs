@@ -2,10 +2,11 @@
 using ContactProBlazor.Interfaces;
 using ContactProBlazor.Client.Models;
 using ContactProBlazor.Client.Interfaces;
+using Microsoft.AspNetCore.Identity.UI.Services;
 
 namespace ContactProBlazor.Services
 {
-    public class CategoryDTOService(ICategoryRepository repository) : ICategoryDTOService
+    public class CategoryDTOService(ICategoryRepository repository, IEmailSender emailSender) : ICategoryDTOService
     {
         public async Task<CategoryDTO> GetCategoryByIdAsync(int id, string userId)
         {
@@ -52,6 +53,11 @@ namespace ContactProBlazor.Services
         public async Task DeleteCategoryAsync(int id, string userId)
         {
             await repository.DeleteCategoryAsync(id, userId);
+        }
+
+        public async Task<bool> EmailCategoryAsync(int id, EmailData emailData, string userId)
+        {
+            throw new NotImplementedException();
         }
     }
 }
