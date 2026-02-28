@@ -3,10 +3,11 @@ using ContactProBlazor.Helpers;
 using ContactProBlazor.Interfaces;
 using ContactProBlazor.Client.Models;
 using ContactProBlazor.Client.Interfaces;
+using Microsoft.AspNetCore.Identity.UI.Services;
 
 namespace ContactProBlazor.Services
 {
-    public class ContactDTOService(IContactRepository repository) : IContactDTOService
+    public class ContactDTOService(IContactRepository repository, IEmailSender emailSender) : IContactDTOService
     {
         public async Task<ContactDTO?> GetContactByIdAsync(int id, string userId)
         {
