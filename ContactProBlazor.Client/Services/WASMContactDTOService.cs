@@ -1,4 +1,5 @@
-﻿using ContactProBlazor.Client.Models;
+﻿using System.Net.Http.Json;
+using ContactProBlazor.Client.Models;
 using ContactProBlazor.Client.Interfaces;
 
 namespace ContactProBlazor.Client.Services
@@ -10,9 +11,9 @@ namespace ContactProBlazor.Client.Services
             throw new NotImplementedException();
         }
 
-        public Task<List<ContactDTO>> GetContactsAsync(string userId)
+        public async Task<List<ContactDTO>> GetContactsAsync(string userId)
         {
-            throw new NotImplementedException();
+            return await http.GetFromJsonAsync<List<ContactDTO>>("api/contacts") ?? [];
         }
 
         public Task<List<ContactDTO>> GetContactsByCategoryAsync(int categoryId, string userId)
