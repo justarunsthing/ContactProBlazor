@@ -37,5 +37,10 @@ namespace ContactProBlazor.Client.Services
             HttpResponseMessage response = await http.DeleteAsync($"api/categories/{id}"); // [FromRoute] parameter
             response.EnsureSuccessStatusCode();
         }
+
+        public Task<bool> EmailCategoryAsync(int id, EmailData emailData, string userId)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
