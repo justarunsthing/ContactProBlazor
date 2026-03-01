@@ -6,7 +6,7 @@ namespace ContactProBlazor.Client.Services
 {
     public class WASMCategoryDTOService(HttpClient http) : ICategoryDTOService
     {
-        public Task<CategoryDTO> GetCategoryByIdAsync(int id, string userId)
+        public Task<CategoryDTO?> GetCategoryByIdAsync(int id, string userId)
         {
             throw new NotImplementedException();
         }

@@ -53,7 +53,7 @@ namespace ContactProBlazor.Services
                                                   .Where(c => string.IsNullOrEmpty(searchTermLower)
                                                            || c.FirstName!.ToLower().Contains(searchTermLower)
                                                            || c.LastName!.ToLower().Contains(searchTermLower)
-                                                           || c.Categories.Any(cat => cat.Name!.ToLower().Contains(searchTermLower))
+                                                           || c.Categories != null && c.Categories.Any(cat => cat.Name!.ToLower().Contains(searchTermLower))
                                                   ).ToListAsync();
 
             return contacts;
@@ -87,7 +87,7 @@ namespace ContactProBlazor.Services
 
                     if (category != null)
                     {
-                        contact.Categories.Add(category);
+                        contact.Categories?.Add(category);
                     }
                 }
 
@@ -138,7 +138,7 @@ namespace ContactProBlazor.Services
 
             if (contact != null)
             {
-                contact.Categories.Clear();
+                contact.Categories?.Clear();
                 await context.SaveChangesAsync();
             }
         }

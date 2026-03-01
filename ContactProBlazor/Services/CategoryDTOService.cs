@@ -44,7 +44,7 @@ namespace ContactProBlazor.Services
                 categoryToUpdate.Name = category.Name;
 
                 // Prevents duplicate db records
-                categoryToUpdate.Contacts.Clear();
+                categoryToUpdate.Contacts?.Clear();
 
                 await repository.UpdateCategoryAsync(categoryToUpdate, userId);
             }
@@ -59,14 +59,14 @@ namespace ContactProBlazor.Services
         {
             Category? category = await repository.GetCategoryAsync(id, userId);
 
-            if (category == null || category.Contacts.Count < 1)
+            if (category == null || category.Contacts?.Count < 1)
             {
                 return false;
             }
 
             try
             {
-                string recipients = string.Join(";", category.Contacts.Select(c => c.Email));
+                string recipients = string.Join(";", category.Contacts!.Select(c => c.Email));
 
                 await emailSender.SendEmailAsync(recipients, emailData.Subject, emailData.Body);
 

@@ -28,7 +28,7 @@ namespace ContactProBlazor.Models
             foreach (var contact in Contacts ?? [])
             {
                 // Prevent circular reference
-                contact.Categories.Clear();
+                contact.Categories?.Clear();
                 dto.Contacts?.Add(contact.ToDTO());
             }
 

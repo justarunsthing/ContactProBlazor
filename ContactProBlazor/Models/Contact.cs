@@ -100,7 +100,7 @@ namespace ContactProBlazor.Models
             foreach (var category in Categories ?? [])
             {
                 // Prevent circular reference
-                category.Contacts.Clear();
+                category.Contacts?.Clear();
                 dto.Categories?.Add(category.ToDTO());
             }
 

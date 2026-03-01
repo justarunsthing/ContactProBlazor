@@ -103,7 +103,7 @@ namespace ContactProBlazor.Services
                 }
 
                 // Clear existing categories and update with new ones, prevent duplicates and new insertions
-                contact.Categories.Clear();
+                contact.Categories?.Clear();
                 // Update contact first to ensure the contact is saved before updating categories
                 await repository.UpdateContactAsync(contact);
                 // Remove existing categories
@@ -131,7 +131,7 @@ namespace ContactProBlazor.Services
 
             try
             {
-                await emailSender.SendEmailAsync(contact.Email, emailData.Subject, emailData.Body);
+                await emailSender.SendEmailAsync(contact.Email!, emailData.Subject, emailData.Body);
 
                 return true;
             }
