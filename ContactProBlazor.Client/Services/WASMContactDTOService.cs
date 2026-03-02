@@ -21,9 +21,9 @@ namespace ContactProBlazor.Client.Services
             return await http.GetFromJsonAsync<List<ContactDTO>>($"api/contacts?categoryId={categoryId}") ?? [];
         }
 
-        public Task<List<ContactDTO>> SearchContactsAsync(string searchTerm, string userId)
+        public async Task<List<ContactDTO>> SearchContactsAsync(string searchTerm, string userId)
         {
-            throw new NotImplementedException();
+            return await http.GetFromJsonAsync<List<ContactDTO>>($"api/contacts/search?searchTerm={searchTerm}") ?? [];
         }
 
         public Task<ContactDTO> CreateContactAsync(ContactDTO dto, string userId)
