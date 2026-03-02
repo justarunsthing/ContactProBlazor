@@ -38,5 +38,24 @@ namespace ContactProBlazor.Controllers
                 return Problem();
             }
         }
+
+        [HttpGet("search")]
+        public async Task<ActionResult<List<ContactDTO>>> SearchContacts([FromQuery] string searchTerm)
+        {
+            if (string.IsNullOrEmpty(searchTerm))
+            {
+                return BadRequest();
+            }
+
+            try
+            {
+                return await contactDTOService.SearchContactsAsync(searchTerm, _userId);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+                return Problem();
+            }
+        }
     }
 }
