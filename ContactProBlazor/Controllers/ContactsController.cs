@@ -18,7 +18,6 @@ namespace ContactProBlazor.Controllers
         private string _userId => userManager.GetUserId(User)!;
 
         [HttpGet]
-        // [HttpGet("{id}")]
         public async Task<ActionResult<List<ContactDTO>>> GetContacts([FromQuery] int? categoryId)
         {
             try
@@ -50,6 +49,22 @@ namespace ContactProBlazor.Controllers
             try
             {
                 return await contactDTOService.SearchContactsAsync(searchTerm, _userId);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+                return Problem();
+            }
+        }
+
+        [HttpDelete("{id:int}")]
+        public async Task<ActionResult> DeleteContact([FromRoute] int id)
+        {
+            try
+            {
+                await contactDTOService.DeleteContactAsync(id, _userId);
+
+                return NoContent();
             }
             catch (Exception ex)
             {
