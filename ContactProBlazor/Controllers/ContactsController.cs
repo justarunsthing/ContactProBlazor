@@ -17,6 +17,22 @@ namespace ContactProBlazor.Controllers
         // Is an expression bodied member as it needs to be evaluated everytime this controller is accessed
         private string _userId => userManager.GetUserId(User)!;
 
+        [HttpGet("id:{int}")]
+        public async Task<ActionResult<ContactDTO>> GetContactById([FromRoute] int id)
+        {
+            try
+            {
+                ContactDTO? contact = await contactDTOService.GetContactByIdAsync(id, _userId);
+
+                return contact == null ? NotFound() : contact;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+                return Problem();
+            }
+        }
+
         [HttpGet]
         public async Task<ActionResult<List<ContactDTO>>> GetContacts([FromQuery] int? categoryId)
         {
