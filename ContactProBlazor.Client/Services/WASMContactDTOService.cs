@@ -26,9 +26,14 @@ namespace ContactProBlazor.Client.Services
             return await http.GetFromJsonAsync<List<ContactDTO>>($"api/contacts/search?searchTerm={searchTerm}") ?? [];
         }
 
-        public Task<ContactDTO> CreateContactAsync(ContactDTO dto, string userId)
+        public async Task<ContactDTO> CreateContactAsync(ContactDTO dto, string userId)
         {
-            throw new NotImplementedException();
+            HttpResponseMessage response = await http.PostAsJsonAsync($"api/contacts", dto);
+            response.EnsureSuccessStatusCode();
+
+            ContactDTO? createdContact = await response.Content.ReadFromJsonAsync<ContactDTO>();
+
+            return createdContact ?? throw new HttpRequestException("Invalid JSON response from endpoint");
         }
 
         public Task UpdateContactAsync(ContactDTO dto, string userId)
