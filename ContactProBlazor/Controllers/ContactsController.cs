@@ -73,6 +73,23 @@ namespace ContactProBlazor.Controllers
             }
         }
 
+        [HttpPost]
+        public async Task<ActionResult<ContactDTO>> CreateContact([FromBody] ContactDTO contact) // Form post
+        {
+            try
+            {
+                ContactDTO newContact = await contactDTOService.CreateContactAsync(contact, _userId);
+
+                // Return an action with a link for what was created
+                return CreatedAtAction(nameof(GetContactById), new { id = newContact.Id });
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+                return Problem();
+            }
+        }
+
         [HttpDelete("{id:int}")]
         public async Task<ActionResult> DeleteContact([FromRoute] int id)
         {
