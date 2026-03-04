@@ -6,9 +6,17 @@ namespace ContactProBlazor.Client.Services
 {
     public class WASMContactDTOService(HttpClient http) : IContactDTOService
     {
-        public Task<ContactDTO?> GetContactByIdAsync(int id, string userId)
+        public async Task<ContactDTO?> GetContactByIdAsync(int id, string userId)
         {
-            throw new NotImplementedException();
+            try
+            {
+                return await http.GetFromJsonAsync<ContactDTO>($"api/contacts/{id}");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+                return null;
+            }
         }
 
         public async Task<List<ContactDTO>> GetContactsAsync(string userId)
