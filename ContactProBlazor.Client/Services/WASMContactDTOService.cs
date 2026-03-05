@@ -44,9 +44,10 @@ namespace ContactProBlazor.Client.Services
             return createdContact ?? throw new HttpRequestException("Invalid JSON response from endpoint");
         }
 
-        public Task UpdateContactAsync(ContactDTO dto, string userId)
+        public async Task UpdateContactAsync(ContactDTO dto, string userId)
         {
-            throw new NotImplementedException();
+            HttpResponseMessage response = await http.PutAsJsonAsync($"api/contacts/{dto.Id}", dto);
+            response.EnsureSuccessStatusCode();
         }
 
         public async Task DeleteContactAsync(int id, string userId)
