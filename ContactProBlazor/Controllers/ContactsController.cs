@@ -90,6 +90,27 @@ namespace ContactProBlazor.Controllers
             }
         }
 
+        [HttpPut("{id:int}")]
+        public async Task<ActionResult> UpdateContact([FromRoute] int id, [FromBody] ContactDTO contact)
+        {
+            if (id != contact.Id)
+            {
+                return BadRequest();
+            }
+
+            try
+            {
+                await contactDTOService.UpdateContactAsync(contact, _userId);
+
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+                return Problem();
+            }
+        }
+
         [HttpDelete("{id:int}")]
         public async Task<ActionResult> DeleteContact([FromRoute] int id)
         {
