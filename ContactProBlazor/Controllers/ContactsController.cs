@@ -17,7 +17,7 @@ namespace ContactProBlazor.Controllers
         // Is an expression bodied member as it needs to be evaluated everytime this controller is accessed
         private string _userId => userManager.GetUserId(User)!;
 
-        [HttpGet("id:{int}")]
+        [HttpGet("{id:int}")]
         public async Task<ActionResult<ContactDTO>> GetContactById([FromRoute] int id)
         {
             try
