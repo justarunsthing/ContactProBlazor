@@ -56,9 +56,19 @@ namespace ContactProBlazor.Client.Services
             response.EnsureSuccessStatusCode();
         }
 
-        public Task<bool> EmailContactAsync(int id, EmailData emailData, string userId)
+        public async Task<bool> EmailContactAsync(int id, EmailData emailData, string userId)
         {
-            throw new NotImplementedException();
+            try
+            {
+                HttpResponseMessage response = await http.PostAsJsonAsync($"api/contacts/email/{id}", emailData);
+
+                return response.IsSuccessStatusCode;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+                return false;
+            }
         }
     }
 }
