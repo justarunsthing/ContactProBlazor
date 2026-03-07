@@ -101,7 +101,7 @@ namespace ContactProBlazor.Controllers
             }
         }
 
-        [HttpPost("/email/{id:int}")]
+        [HttpPost("email/{id:int}")]
         public async Task<ActionResult> EmailCategory([FromRoute] int id, [FromBody] EmailData emailData)
         {
             try
