@@ -100,5 +100,21 @@ namespace ContactProBlazor.Controllers
                 return Problem();
             }
         }
+
+        [HttpPost("/email/{id:int}")]
+        public async Task<ActionResult> EmailCategory([FromRoute] int id, [FromBody] EmailData emailData)
+        {
+            try
+            {
+                bool success = await categoryDTOService.EmailCategoryAsync(id, emailData, _userId);
+
+                return success ? Ok() : BadRequest();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+                return Problem();
+            }
+        }
     }
 }
