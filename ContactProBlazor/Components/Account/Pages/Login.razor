@@ -10,6 +10,7 @@
 @inject ILogger<Login> Logger
 @inject NavigationManager NavigationManager
 @inject IdentityRedirectManager RedirectManager
+@inject IConfiguration Config
 
 <PageTitle>Log in</PageTitle>
 
@@ -62,7 +63,7 @@
                             <hr />
                         </div>
                     </div>
-                    <form class="text-center" method="post" @formname="demoLogin" onsubmit="@LoginDemoUser">
+                    <form class="text-center" method="post" @formname="demoLogin" @onsubmit="LoginDemoUser">
                         <AntiforgeryToken />
                         <button class="btn btn-sm btn-outline-primary">
                             Login as a demo user
@@ -178,7 +179,20 @@
 
     private async Task LoginDemoUser()
     {
-        
+        string? demoUserEmail = Config["DemoUserLogin"];
+
+        if (!string.IsNullOrEmpty(demoUserEmail))
+        {
+            ApplicationUser? demoUser = await SignInManager.UserManager.FindByEmailAsync(demoUserEmail);
+
+            if (demoUser != null)
+            {
+                await SignInManager.SignInAsync(demoUser, false);
+                RedirectManager.RedirectTo(ReturnUrl);
+            }
+        }
+
+        errorMessage = "Error: Demo user login is not availabe.";
     }
 
     private sealed class InputModel
