@@ -50,6 +50,25 @@
                         <button type="submit" class="w-100 btn btn-lg btn-primary">Log in</button>
                     </div>
                 </EditForm>
+                <div class="v-stack gap-2">
+                    <div class="d-flex align-items-center gap-3 px-5">
+                        <div class="flex-grow-1">
+                            <hr />
+                        </div>
+                        <div>
+                            or
+                        </div>
+                        <div class="flex-grow-1">
+                            <hr />
+                        </div>
+                    </div>
+                    <form class="text-center" method="post" @formname="demoLogin" onsubmit="@LoginDemoUser">
+                        <AntiforgeryToken />
+                        <button class="btn btn-sm btn-outline-primary">
+                            Login as a demo user
+                        </button>
+                    </form>
+                </div>
                 <hr />
                 <div class="row row-cols-1 row-cols-md-2 g-3">
                     <div class="dropdown col">
@@ -155,6 +174,11 @@
         {
             errorMessage = "Error: Invalid login attempt.";
         }
+    }
+
+    private async Task LoginDemoUser()
+    {
+        
     }
 
     private sealed class InputModel
