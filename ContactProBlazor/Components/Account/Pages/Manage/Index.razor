@@ -15,7 +15,7 @@
 <h3>Profile</h3>
 <StatusMessage />
 
-<div class="row">
+<div class="row mb-5">
     <div class="col-xl-6">
         <EditForm Model="Input" FormName="profile" OnValidSubmit="OnValidSubmitAsync" method="post" enctype="multipart/form-data">
             <DataAnnotationsValidator />
@@ -39,12 +39,15 @@
                 <label for="Input.PhoneNumber" class="form-label">Phone number</label>
                 <ValidationMessage For="() => Input.PhoneNumber" class="text-danger" />
             </div>
-            <img src="@profilePictureUrl" class="img-fluid p-3 rounded" id="profile-pic-preview" />
-            <div class="form-floating mb-3">
-                <label for="Input.ProfilePicture" class="form-label">Profile Picture</label>
-                <input type="file" class="form-control" name="Input.ProfilePicture" accept=".jpg, .jpeg, .png, .svg, .gif"
-                       onchange="document.getElementById('profile-pic-preview').src = window.URL.createObjectURL(this.files[0])"
-                />
+            <div class="mb-3 row">
+                <div class="col-lg-4">
+                    <img src="@profilePictureUrl" class="img-fluid" id="profile-pic-preview" style="height: 6rem;" />
+                </div>
+                <div class="col-lg-8">
+                    <label for="Input.ProfilePicture" class="form-label">Profile Picture</label>
+                    <input type="file" class="form-control" name="Input.ProfilePicture" accept=".jpg, .jpeg, .png, .svg, .gif"
+                           onchange="document.getElementById('profile-pic-preview').src = window.URL.createObjectURL(this.files[0])" />
+                </div>
             </div>
             <button type="submit" class="w-100 btn btn-lg btn-primary">Save</button>
         </EditForm>
