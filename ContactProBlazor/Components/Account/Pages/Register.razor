@@ -15,6 +15,7 @@
 @inject NavigationManager NavigationManager
 @inject IdentityRedirectManager RedirectManager
 @inject ApplicationDbContext Context
+@inject IConfiguration Config
 
 <PageTitle>Register</PageTitle>
 
@@ -27,7 +28,7 @@
                 </div>
             </div>
             <div class="card-body">
-                <StatusMessage Message="@Message" />
+                <StatusMessage Message="@(Message ?? errorMessage)" />
                 <EditForm Model="Input" method="post" OnValidSubmit="RegisterUser" FormName="register" enctype="multipart/form-data">
                     <DataAnnotationsValidator />
                     <h2>Create a new account.</h2>
@@ -106,6 +107,8 @@
 
 @code {
     private IEnumerable<IdentityError>? identityErrors;
+
+    private string? errorMessage;
 
     [SupplyParameterFromForm]
     private InputModel Input { get; set; } = default!;
@@ -203,7 +206,20 @@
 
     private async Task LoginDemoUser()
     {
+        string? demoUserEmail = Config["DemoUserLogin"];
 
+        if (!string.IsNullOrEmpty(demoUserEmail))
+        {
+            ApplicationUser? demoUser = await SignInManager.UserManager.FindByEmailAsync(demoUserEmail);
+
+            if (demoUser != null)
+            {
+                await SignInManager.SignInAsync(demoUser, false);
+                RedirectManager.RedirectTo(ReturnUrl);
+            }
+        }
+
+        errorMessage = "Error: Demo user login is not availabe.";
     }
 
     private sealed class InputModel
