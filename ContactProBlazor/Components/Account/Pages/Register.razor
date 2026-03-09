@@ -31,7 +31,9 @@
                 <StatusMessage Message="@(Message ?? errorMessage)" />
                 <EditForm Model="Input" method="post" OnValidSubmit="RegisterUser" FormName="register" enctype="multipart/form-data">
                     <DataAnnotationsValidator />
-                    <h2>Create a new account.</h2>
+                    <h2 class="text-center card-title">
+                        Create a new account
+                    </h2>
                     <hr />
                     <ValidationSummary class="text-danger" role="alert" />
                     <div class="form-floating mb-3">
