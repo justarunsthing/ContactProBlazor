@@ -2,11 +2,20 @@
 using ContactProBlazor.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Npgsql;
 
 namespace ContactProBlazor.Data
 {
     public class DataUtility
     {
+        public static string GetConnectionString(IConfiguration config)
+        {
+            var connectionString = config.GetConnectionString("DefaultConnection"); // Local connection string
+            var databaseUrl = Environment.GetEnvironmentVariable("DATABASE_PRIVATE_URL"); // Railway connection string
+
+            return string.IsNullOrEmpty(databaseUrl) ? connectionString! : BuildConnectionString(databaseUrl);
+        }
+
         // IServiceProvider provides a hook to any services registered
         public static async Task ManageDataAsync(IServiceProvider serviceProvider)
         {
@@ -188,6 +197,23 @@ namespace ContactProBlazor.Data
             }
 
             await dbContext.SaveChangesAsync();
+        }
+
+        private static string BuildConnectionString(string databaseUrl)
+        {
+            var databaseUri = new Uri(databaseUrl);
+            var userInfo = databaseUri.UserInfo.Split(':');
+            var builder = new NpgsqlConnectionStringBuilder
+            {
+                Host = databaseUri.Host,
+                Port = databaseUri.Port,
+                Username = userInfo[0],
+                Password = userInfo[1],
+                Database = databaseUri.LocalPath.TrimStart('/'),
+                SslMode = SslMode.Prefer
+            };
+
+            return builder.ToString();
         }
     }
 }
